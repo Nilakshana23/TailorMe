@@ -1,0 +1,18 @@
+﻿.work-card { display: block; border: 1px solid #e3dedd; border-radius: 16px; padding: 20px; background: #fff; color: inherit; text-decoration: none; }
+.work-card:hover { background: #fbf9f9; }
+.work-card:focus-visible { outline: 3px solid #735c00; outline-offset: 3px; }
+.work-card-heading { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.work-card-heading h3 { flex: 1; min-width: 140px; }
+.work-card-overdue { border-color: #e8b3b3; }
+.work-card-today { border-color: #edbd99; }
+.work-deadline { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 8px; margin-top: 16px; font-size: 13px; font-weight: 600; }
+.work-deadline .material-symbols-outlined { font-size: 18px; }
+.work-deadline-unconfirmed { background: #efefef; color: #444; }
+.work-deadline-future { background: #e0efff; color: #164574; }
+.work-deadline-soon { background: #fef3c7; color: #78350f; }
+.work-deadline-today { background: #ffedd5; color: #9a3412; }
+.work-deadline-overdue { background: #fee2e2; color: #7f1d1d; }
+.work-confirmed { margin-top: 16px; font-weight: 600; overflow-wrap: anywhere; }
+.work-preferred { margin-top: 6px; font-size: 13px; color: #4c4546; }
+.work-detail-link { display: inline-block; margin-top: 16px; font-size: 13px; text-decoration: underline; }
+@media (max-width: 600px) { .work-card { padding: 16px; } }

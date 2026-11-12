@@ -1,0 +1,5 @@
+﻿.work-progress-timeline { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 12px; }
+.work-progress-timeline li { padding: 14px; border: 1px solid #d8d0ce; border-radius: 12px; background: #fbf9f9; overflow-wrap: anywhere; }
+.work-progress-timeline .work-progress-current { border: 2px solid #735c00; background: #fff7d9; }
+@media (max-width: 1100px) { .work-progress-timeline { grid-template-columns: repeat(3,minmax(0,1fr)); } }
+@media (max-width: 600px) { .work-progress-timeline { grid-template-columns: repeat(2,minmax(0,1fr)); } }

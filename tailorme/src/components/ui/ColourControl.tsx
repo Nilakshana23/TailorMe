@@ -1,0 +1,7 @@
+import {useState} from 'react'
+import {colourPresets,validHex} from '../../utils/designDrawing'
+export default function ColourControl({id,label,value,onChange,empty=false}:{id:string;label:string;value:string;onChange:(value:string)=>void;empty?:boolean}){
+ const [draft,setDraft]=useState({base:value,text:value})
+ const text=draft.base===value?draft.text:value,error=!validHex(text)
+ return <fieldset className="colour-control"><legend>{label}</legend>{empty&&<p>No fill applied. Choose a colour to add fill.</p>}<div className="colour-palette">{colourPresets.map(([name,hex])=><button type="button" key={hex} aria-label={`${label}: ${name}`} aria-pressed={!empty&&value.toLowerCase()===hex} title={`${name} ${hex}`} onClick={()=>{setDraft({base:hex,text:hex});onChange(hex)}}><span style={{background:hex}}/></button>)}</div><label htmlFor={`${id}-picker`}>Custom {label.toLowerCase()}</label><input id={`${id}-picker`} type="color" value={validHex(value)?value:'#303039'} onChange={event=>onChange(event.target.value)}/><label htmlFor={`${id}-hex`}>{label} HEX (#RRGGBB)</label><input id={`${id}-hex`} value={text} maxLength={7} aria-invalid={error} aria-describedby={`${id}-error`} onChange={event=>{setDraft({base:value,text:event.target.value});if(validHex(event.target.value))onChange(event.target.value)}}/><p id={`${id}-error`} role="status">{error?'Enter a colour as #RRGGBB.':''}</p></fieldset>
+}

@@ -1,0 +1,15 @@
+.request-references { margin-top:24px; border:1px solid #ded8ce; padding:20px; border-radius:14px; background:#f9f6ef; min-width:0; }
+.request-references p { font-size:14px; line-height:1.6; margin:12px 0; overflow-wrap:anywhere; }
+.request-reference-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr)); gap:16px; margin-top:16px; }
+.request-reference-grid article { min-width:0; border:1px solid #ded8ce; padding:14px; background:white; border-radius:12px; }
+.request-reference-grid h4 { font-weight:600; margin-bottom:12px; }
+.request-reference-grid img { display:block; width:100%; height:220px; object-fit:contain; background:#f5f1e9; border-radius:8px; }
+.request-references button { min-height:44px; padding:10px 14px; margin-top:10px; }
+.request-reference-upload-label { display:block; margin:16px 0 8px; font-weight:600; }
+.request-references input[type=file] { display:block; width:100%; min-height:48px; padding:10px; border:1px solid #bcb4a7; border-radius:8px; background:white; }
+.request-references input[type=file]::file-selector-button { background:#000; color:#fff; padding:10px 14px; margin-right:12px; border-radius:6px; cursor:pointer; }
+.request-reference-grid label { display:block; margin-top:16px; font-size:14px; font-weight:500; }
+.request-reference-grid textarea { width:100%; margin-top:8px; padding:10px; border:1px solid #bcb4a7; border-radius:8px; font:inherit; resize:vertical; }
+.request-reference-note { white-space:pre-wrap; }
+.request-references progress { display:block; width:100%; }
+.request-references :focus-visible { outline:3px solid #735c00; outline-offset:3px; }

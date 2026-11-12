@@ -1,0 +1,13 @@
+﻿.request-status-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; line-height: 1.5; white-space: nowrap; flex-shrink: 0; }
+.request-status-badge .material-symbols-outlined { font-size: 18px; }
+.request-status-pending { background: #fef3c7; color: #78350f; }
+.request-status-accepted { background: #dcfce7; color: #14532d; }
+.request-status-rejected { background: #fee2e2; color: #7f1d1d; }
+.request-status-cancelled { background: #efefef; color: #444444; }
+.request-card-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.request-card-heading > a { min-width: 0; overflow-wrap: anywhere; }
+.request-detail-status { display: flex; justify-content: flex-end; margin-bottom: 16px; }
+.request-timestamps { color: var(--color-on-surface-variant, #4c4546); font-size: 13px; margin-top: 16px; }
+.request-filters { margin-bottom: 24px; }
+.request-filters label { display: block; margin-bottom: 8px; font-weight: 600; }
+.request-filters select { width: 100%; max-width: 280px; }

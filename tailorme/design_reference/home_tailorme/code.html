@@ -1,0 +1,389 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>TailorMe | Bespoke Luxury Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&amp;family=Outfit:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-bright": "#fbf9f9",
+                    "surface": "#fbf9f9",
+                    "error": "#ba1a1a",
+                    "surface-variant": "#e3e2e2",
+                    "on-error": "#ffffff",
+                    "primary-fixed": "#e2e2e2",
+                    "secondary-fixed-dim": "#e9c349",
+                    "surface-container-highest": "#e3e2e2",
+                    "on-primary-fixed-variant": "#474747",
+                    "surface-dim": "#dbdad9",
+                    "surface-container-high": "#e9e8e7",
+                    "surface-container-low": "#f5f3f3",
+                    "on-surface-variant": "#4c4546",
+                    "on-tertiary-fixed-variant": "#474836",
+                    "primary": "#000000",
+                    "surface-container": "#efeded",
+                    "tertiary-container": "#1b1d0e",
+                    "on-primary": "#ffffff",
+                    "primary-container": "#1b1b1b",
+                    "secondary-fixed": "#ffe088",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed-dim": "#c6c6c6",
+                    "on-primary-container": "#848484",
+                    "on-secondary-fixed-variant": "#574500",
+                    "error-container": "#ffdad6",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#1b1d0e",
+                    "on-tertiary-container": "#848570",
+                    "background": "#fbf9f9",
+                    "inverse-surface": "#303031",
+                    "tertiary-fixed": "#e4e4cc",
+                    "on-error-container": "#93000a",
+                    "on-secondary": "#ffffff",
+                    "on-surface": "#1b1c1c",
+                    "on-background": "#1b1c1c",
+                    "outline-variant": "#cfc4c5",
+                    "on-secondary-fixed": "#241a00",
+                    "tertiary": "#000000",
+                    "on-secondary-container": "#745c00",
+                    "secondary-container": "#fed65b",
+                    "on-primary-fixed": "#1b1b1b",
+                    "secondary": "#735c00",
+                    "outline": "#7e7576",
+                    "surface-tint": "#5e5e5e",
+                    "inverse-on-surface": "#f2f0f0",
+                    "inverse-primary": "#c6c6c6",
+                    "tertiary-fixed-dim": "#c8c8b0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "container-max": "1440px",
+                    "margin-desktop": "64px",
+                    "margin-mobile": "20px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Playfair Display"],
+                    "body-lg": ["Outfit"],
+                    "headline-md": ["Playfair Display"],
+                    "label-sm": ["Outfit"],
+                    "label-md": ["Outfit"],
+                    "headline-sm": ["Playfair Display"],
+                    "display-lg-mobile": ["Playfair Display"],
+                    "body-md": ["Outfit"]
+            },
+            "fontSize": {
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-sm": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .editorial-shadow {
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
+        }
+        
+        .luxury-gradient {
+            background: linear-gradient(135deg, #fbf9f9 0%, #f5f3f3 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-outline-variant/30 shadow-sm transition-all duration-300 ease-in-out">
+<div class="flex justify-between items-center px-margin-desktop h-20 max-w-container-max mx-auto">
+<div class="flex items-center gap-12">
+<a class="text-headline-sm font-display-lg tracking-tighter text-primary" href="#">TailorMe</a>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-body-md text-body-md text-on-surface-variant/70 hover:text-primary transition-colors" href="#">Categories</a>
+<a class="font-body-md text-body-md text-on-surface-variant/70 hover:text-primary transition-colors" href="#">Designers</a>
+<a class="font-body-md text-body-md text-on-surface-variant/70 hover:text-primary transition-colors" href="#">Marketplace</a>
+<a class="font-body-md text-body-md text-on-surface-variant/70 hover:text-primary transition-colors" href="#">Our Story</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center bg-surface-container-low px-4 py-2 rounded-full border border-outline-variant/20">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-label-md w-48 ml-2" placeholder="Search designs..." type="text">
+</div>
+<button class="relative">
+<span class="material-symbols-outlined text-primary">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-secondary-container rounded-full"></span>
+</button>
+<button>
+<span class="material-symbols-outlined text-primary">shopping_bag</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/30">
+<img class="w-full h-full object-cover" data-alt="Close-up portrait of a sophisticated male customer with a groomed beard, wearing a high-end black turtleneck, looking slightly away from the camera. The lighting is soft and cinematic, with a clean white studio background. The overall aesthetic is minimal, luxurious, and professional, reflecting a premium fashion brand's user profile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuABoP4o1ZUNXxjZ2MGqU29ohScY2JR-ixcMa6YsRGklSU7gQknzX1Y5HXYjwE6bBFdkTzm_2Jn6PbfPsXBel0SSVeSc0s50jgZI1v6Vzsbri-86X5HqnYUlJPRbL239hcvCT6R2eulAnx0Vv2SB-wv4skxcu1yFDsIJ21o0EhTQb586nGXQMqSQ7eVZckCCUz2yA--qyzIcr_oaKwrAFQdthQhUKm9SKSwzL0BKnC8WQ5UBm3lS750kqN5A5medLzCihkXqZJ4gAfk">
+</div>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-24 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<!-- Personalized Greeting -->
+<header class="mb-16">
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg mb-2">Hello, Julian</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant italic">Your bespoke journey continues where you left off.</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Continue Designing & Order Status Overview -->
+<div class="lg:col-span-8 flex flex-col gap-gutter">
+<!-- Continue Designing Bento Card -->
+<section class="group relative bg-surface-container-low rounded-2xl overflow-hidden min-h-[400px] flex items-end editorial-shadow transition-transform hover:scale-[1.01] duration-500">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover grayscale-[20%] group-hover:scale-105 transition-transform duration-700" data-alt="A professional fashion design workstation featuring a partially finished charcoal wool blazer on a wooden mannequin. High-end tailoring tools, fabric shears, and sketches of modern silhouettes are arranged on a minimalist white oak table. Soft daylight streams in from a large window, highlighting the fine texture of the fabric and the clean, editorial atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMdcdzQNNb6flrCsks9EhGvcdZfgXj9ERBRNjWbGNO9tg571Va6bXCMNOlkzhot5EqKIF_AKKruB8OhCEo_iav16X6DOzowtNPeeIrqYHqzLVsDiad3EYbPtYpB4sh_CT59Dmr7DKD0AOD2pXtDqlxdu5E-9eCLl21-wPYZqG2f7w4QSlN9iIS_voZEQE1ralRz5nUP76cJVO5wgf2aaNwKSgdA24XiF3Za-M9DRuIQCikO171teyFSezImQtGpBiG6oCJU9EcJK4">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+</div>
+<div class="relative z-10 p-10 w-full">
+<div class="inline-block px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full font-label-sm text-label-sm mb-4">
+                            Draft • Updated 2 hours ago
+                        </div>
+<h2 class="font-display-lg text-white text-headline-md mb-2">The Midnight Tuxedo</h2>
+<p class="font-body-md text-white/70 max-w-md mb-6">Italian Peak Lapel • Super 150s Wool • Hand-finished Buttonholes</p>
+<button class="bg-white text-primary px-8 py-4 rounded-lg font-label-md flex items-center gap-3 hover:bg-secondary-container transition-colors">
+                            Continue Designing
+                            <span class="material-symbols-outlined">arrow_right_alt</span>
+</button>
+</div>
+</section>
+<!-- Trending Fabrics Grid -->
+<section class="mt-8">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h3 class="font-display-lg text-headline-sm">Trending Fabrics</h3>
+<p class="font-label-md text-on-surface-variant uppercase tracking-widest mt-1">Sourced from the finest mills</p>
+</div>
+<a class="font-label-md text-primary border-b border-primary pb-1" href="#">View Library</a>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+<!-- Fabric Card 1 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-square rounded-xl overflow-hidden mb-3">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Macro texture shot of luxurious navy blue cashmere wool fabric with a subtle herringbone pattern. The lighting highlights the soft, fine fibers and the depth of the weave. The style is high-end editorial photography with a focus on tactile luxury and textile craftsmanship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbLd1Aztau-d52CKbeGv3j4fEOKZNrfTESJGwDVNNcBUmAtmFZR5pkxWwboqS8yR1yp2MYFxiOKapFETNn0JgzqyGtIP76Cpm5fki9J1Rh9KA46puna9r5iXkiZPzrycEx6rSwveCbr06wYQ_ShyMUM0mqF5lkh32USSxn4ovHgKMi-UJscGN1R_w2TS84bpyi8pbfvKSXwf9C86H_ziLSpfm2czEjqZSIq3sDylHmH6_sgdGqluefqGkl-0pLxhuiOo2d-5rwT-k">
+<div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</div>
+</div>
+<h4 class="font-label-md">Loro Piana Cashmere</h4>
+<p class="font-label-sm text-on-surface-variant">Midnight Navy • Herringbone</p>
+</div>
+<!-- Fabric Card 2 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-square rounded-xl overflow-hidden mb-3">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Detailed close-up of a premium sage green linen fabric, showing the natural slubs and breathable weave. The color is soft and earthy, reflecting a sophisticated summer aesthetic. Shot in bright, natural light to emphasize the crisp, clean texture of high-quality textile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3VXj0N3HaYhQUGiJKXaeu1Iy_Uyq5Yaoe1Lp9RfYFHAvrCZuLSP6Z1zx8_dTgeE88PvJVJX6av7kSavETaDdU3BRilgixIDApy7yNZAej8R834F2bUBou8tHphewEnYW5wiITkfcgZ3Ds1mAXAhh3w8ZVpxN9JsN5ZYmYvfqghGMsOK3D1JG47AGl5dpeIcS3k05s9LO3dqkSfBfwAWb9NEuIzQQxUwf9gZ6fUVvTLe_mKDOpgqmMHcUV8IQhlpKdK1bTbXCmNgA">
+<div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</div>
+</div>
+<h4 class="font-label-md">Irish Summer Linen</h4>
+<p class="font-label-sm text-on-surface-variant">Sage Green • Plain Weave</p>
+</div>
+<!-- Fabric Card 3 -->
+<div class="group cursor-pointer hidden md:block">
+<div class="relative aspect-square rounded-xl overflow-hidden mb-3">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="High-resolution close-up of charcoal gray Glen Check wool fabric. The pattern is intricate and precise, typical of high-end British tailoring. The fabric has a matte finish and a substantial, structured feel, perfect for professional attire. Editorial, sharp lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLCqCnbXpkVhlKr42jVgOlB4cWjyQ1WN04FqxfxGCZLVIzpQ0-j7rfFMiRzL3BH0OL57JwWcWLXebZEl6yZWEzzfVzlkwRxaMqLtcvs5AN23_RvRnIekNvhBkvb0bypfU_0vZKpc6ka2XD49MxrsE0OJv42PureNwJyc5W8i42yre6ApEY7LlAJu4DwMNIyTyyj6u3iKvnqH3_ZHJUsNuLi7BECOaTTo-QI3jC4YdwqXxoQ76tcD0GdoZhS8dfhqLD6LQyCGfW54Y">
+<div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</div>
+</div>
+<h4 class="font-label-md">Dormeuil Glen Check</h4>
+<p class="font-label-sm text-on-surface-variant">Charcoal • Vintage Series</p>
+</div>
+</div>
+</section>
+</div>
+<!-- Order Status Sidebar -->
+<div class="lg:col-span-4">
+<section class="bg-surface-container-high rounded-2xl p-8 editorial-shadow sticky top-32">
+<h3 class="font-display-lg text-headline-sm mb-6">Order Status</h3>
+<div class="space-y-8 relative">
+<!-- Timeline Line -->
+<div class="absolute left-3 top-2 bottom-2 w-[2px] bg-outline-variant/30 z-0"></div>
+<!-- Status Item 1: Active -->
+<div class="flex gap-6 relative z-10">
+<div class="w-6 h-6 rounded-full bg-secondary-container ring-4 ring-secondary-container/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[14px] text-on-secondary-container" data-weight="fill">check</span>
+</div>
+<div>
+<h4 class="font-label-md text-primary">Measurement Confirmed</h4>
+<p class="text-label-sm text-on-surface-variant mb-2">Dec 12, 2023</p>
+<span class="text-label-sm px-2 py-0.5 bg-surface-container rounded border border-outline-variant/20">Digital Scan Complete</span>
+</div>
+</div>
+<!-- Status Item 2: Pulsing Current -->
+<div class="flex gap-6 relative z-10">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center shrink-0 animate-pulse">
+<span class="w-2 h-2 bg-white rounded-full"></span>
+</div>
+<div>
+<h4 class="font-label-md text-primary">Tailoring in Progress</h4>
+<p class="text-label-sm text-on-surface-variant mb-3">Est. Delivery: Jan 05, 2024</p>
+<div class="w-full bg-outline-variant/20 h-1 rounded-full overflow-hidden">
+<div class="bg-primary w-[65%] h-full"></div>
+</div>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant mt-2 font-semibold">Stage: Pattern Cutting</p>
+</div>
+</div>
+<!-- Status Item 3: Pending -->
+<div class="flex gap-6 relative z-10 opacity-40">
+<div class="w-6 h-6 rounded-full bg-outline-variant/30 flex items-center justify-center shrink-0 border border-outline-variant/50"></div>
+<div>
+<h4 class="font-label-md">Final Fitting</h4>
+<p class="text-label-sm">Estimated Mid-January</p>
+</div>
+</div>
+</div>
+<div class="mt-12 pt-8 border-t border-outline-variant/20">
+<div class="flex items-center gap-4 bg-surface-container p-4 rounded-xl">
+<div class="w-12 h-12 rounded-lg overflow-hidden bg-white flex items-center justify-center text-primary font-bold border border-outline-variant/30">
+                                LS
+                            </div>
+<div>
+<p class="text-label-sm text-on-surface-variant">Master Tailor Assigned</p>
+<p class="font-label-md">Luca Santoro</p>
+</div>
+<button class="ml-auto w-10 h-10 flex items-center justify-center hover:bg-white rounded-full transition-colors">
+<span class="material-symbols-outlined">chat_bubble</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- Top Rated Tailors Horizontal Scroll -->
+<section class="mt-24">
+<div class="flex justify-between items-end mb-10">
+<div>
+<h3 class="font-display-lg text-headline-md">Top Rated Tailors</h3>
+<p class="font-body-md text-on-surface-variant">Award-winning artisans available for your next piece.</p>
+</div>
+<div class="flex gap-4">
+<button class="w-12 h-12 rounded-full border border-outline-variant/50 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-12 h-12 rounded-full border border-outline-variant/50 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="flex gap-8 overflow-x-auto hide-scrollbar pb-8">
+<!-- Tailor 1 -->
+<div class="min-w-[400px] bg-surface-container-low rounded-2xl p-8 flex gap-6 hover:bg-secondary-container/10 transition-colors cursor-pointer group border border-transparent hover:border-outline-variant/20">
+<div class="w-32 h-32 rounded-full overflow-hidden shrink-0 ring-4 ring-white editorial-shadow">
+<img class="w-full h-full object-cover" data-alt="A portrait of a senior male Italian tailor with silver hair and elegant glasses, wearing a bespoke pinstripe waistcoat. He is standing in a brightly lit, modern tailor shop filled with fabric rolls and wooden accents. His expression is warm and confident. The photography is high-contrast, clean, and has a premium editorial feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcp-wp2tYOqCQidLQjrbQFWyXpQQRL5tiih4ElUPWeiLIzh7mAkRTdTga317yr61WvjsGRBixbXUXvZ2sLlsAiEyMLsJPrZxP_pZsV_wRM05CVtaMOw3kcUMOisrsWVfDYzVV2mrHjs1E-_7twmJQ38X_UYql-0pVeJgzsjDcLHjmQrOUvi9WbVwH1ZPORoQb-P57la48r8c1sXFBvn8SyAub8sLRjYNRKvn9szuK9H70ZeP_NO7YWlGKG6kA9ryNgO8k8tnRfl6E">
+</div>
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-on-surface-variant">4.9 (124 reviews)</span>
+</div>
+<h4 class="font-headline-sm mb-1 group-hover:text-primary transition-colors">Alessandro Vieri</h4>
+<p class="font-label-sm uppercase tracking-widest text-on-surface-variant mb-4">Savile Row Specialist</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-white text-[10px] font-bold rounded-full border border-outline-variant/20 uppercase">Bespoke Suits</span>
+<span class="px-3 py-1 bg-white text-[10px] font-bold rounded-full border border-outline-variant/20 uppercase">Outerwear</span>
+</div>
+</div>
+</div>
+<!-- Tailor 2 -->
+<div class="min-w-[400px] bg-surface-container-low rounded-2xl p-8 flex gap-6 hover:bg-secondary-container/10 transition-colors cursor-pointer group border border-transparent hover:border-outline-variant/20">
+<div class="w-32 h-32 rounded-full overflow-hidden shrink-0 ring-4 ring-white editorial-shadow">
+<img class="w-full h-full object-cover" data-alt="Professional portrait of a female fashion designer in her 30s with a sharp bob haircut, wearing a minimalist black silk blouse. She is holding a gold measuring tape. The background is a soft beige studio wall with dramatic, soft-edged shadows. The mood is sophisticated, artistic, and modern-luxury. Professional studio lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXBmEx2Wd4JpH4Bd9BersTBBgLLXfzlOMG46B_vkvSh79axHqwPn3EJgI5YM-N4cx7f4LQV7wqB54TInmg25xZcqrJbEOOvqNiTxNPJmwcc7WK0XyGa0KnOg-AH4bna6t1kCrBrS15S7pNpLc0cBILl-Q47l9mh_TBQfCCt1T9meOv2yEcH6nXBiIo_4B-5oGausKpWz7Q-kJQBduzvSZ64NGqvkNtK2dZAuAmyrXuBEOsS6UwXGou2GUT6f3t6GEUgDAKGJLPHH4">
+</div>
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-on-surface-variant">5.0 (89 reviews)</span>
+</div>
+<h4 class="font-headline-sm mb-1 group-hover:text-primary transition-colors">Elena Moretti</h4>
+<p class="font-label-sm uppercase tracking-widest text-on-surface-variant mb-4">Modern Silhouettes</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-white text-[10px] font-bold rounded-full border border-outline-variant/20 uppercase">Women's Tailoring</span>
+<span class="px-3 py-1 bg-white text-[10px] font-bold rounded-full border border-outline-variant/20 uppercase">Bridal</span>
+</div>
+</div>
+</div>
+<!-- Tailor 3 -->
+<div class="min-w-[400px] bg-surface-container-low rounded-2xl p-8 flex gap-6 hover:bg-secondary-container/10 transition-colors cursor-pointer group border border-transparent hover:border-outline-variant/20">
+<div class="w-32 h-32 rounded-full overflow-hidden shrink-0 ring-4 ring-white editorial-shadow">
+<img class="w-full h-full object-cover" data-alt="Portrait of an artisan tailor of Japanese heritage, wearing an indigo denim workshop apron over a white shirt. He is working with a vintage sewing machine in the background. The aesthetic is 'Quiet Luxury' with a focus on heritage and meticulous attention to detail. Soft, warm lighting and a clean, organized studio environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBadduYwqbXGMH8WUMEA97eg6K2Psa8giIzhj-5CaWHx8IYQKB_jDoGVTJ1DiA5QTbix8VV_mQTXzgkG-Ycqt5WzgH5isfsFF1bSvRkWvEkpX3rEO3stBf04Nc48q4aOXvkg712cP547AQbgK4YfO3GHPjlDkyKbfSwG1E0ktH21aqMs1co2wGNqmgu7gf3AcQ3XKfy6rBoLyKz0s7POyzgVsXGcw36DrbZJ8XipO15g3QuJ15dirOUHQJl1shgs47VG_SHpYpthdc">
+</div>
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-on-surface-variant">4.8 (215 reviews)</span>
+</div>
+<h4 class="font-headline-sm mb-1 group-hover:text-primary transition-colors">Kenzo Tanaka</h4>
+<p class="font-label-sm uppercase tracking-widest text-on-surface-variant mb-4">Japanese Precision</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-white text-[10px] font-bold rounded-full border border-outline-variant/20 uppercase">Heritage Denim</span>
+<span class="px-3 py-1 bg-white text-[10px] font-bold rounded-full border border-outline-variant/20 uppercase">Minimalist</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-primary text-on-primary w-full py-12">
+<div class="flex flex-col items-center justify-center space-y-6 px-margin-desktop max-w-container-max mx-auto">
+<div class="font-display-lg text-headline-sm text-on-primary tracking-tighter">TailorMe</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="font-label-sm text-label-sm text-on-primary/70 hover:text-secondary-fixed transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-primary/70 hover:text-secondary-fixed transition-colors" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-on-primary/70 hover:text-secondary-fixed transition-colors" href="#">Shipping</a>
+<a class="font-label-sm text-label-sm text-on-primary/70 hover:text-secondary-fixed transition-colors" href="#">Returns</a>
+<a class="font-label-sm text-label-sm text-on-primary/70 hover:text-secondary-fixed transition-colors" href="#">Contact</a>
+</div>
+<p class="font-label-sm text-label-sm text-on-primary/50 text-center">© 2024 TailorMe Luxury Custom Apparel. All rights reserved.</p>
+</div>
+</footer>
+<script>
+        // Subtle scroll interaction for navbar
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 20) {
+                nav.classList.add('py-2');
+                nav.classList.remove('h-20');
+                nav.classList.add('h-16');
+            } else {
+                nav.classList.remove('py-2');
+                nav.classList.add('h-20');
+                nav.classList.remove('h-16');
+            }
+        });
+
+        // Hover micro-interactions for tailor cards
+        document.querySelectorAll('.group').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                // Potential for JS triggered animations
+            });
+        });
+    </script>
+</body></html>
