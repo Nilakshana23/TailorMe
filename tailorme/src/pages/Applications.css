@@ -1,0 +1,29 @@
+.application-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+.application-textarea { width: 100%; padding: 16px; border: 1px solid #cfc4c5; border-radius: 12px; background: #fbf9f9; resize: vertical; min-height: 120px; }
+.application-textarea:focus, .application-select:focus { outline: 2px solid #735c00; outline-offset: 3px; }
+.application-select { padding: 12px 40px 12px 16px; border: 1px solid #cfc4c5; border-radius: 12px; background: #fff; min-height: 48px; }
+.application-details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.application-details dt { font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: #4c4546; }
+.application-details dd { margin-top: 8px; overflow-wrap: anywhere; white-space: pre-wrap; }
+.application-admin-grid { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(0, 2fr); gap: 24px; align-items: start; }
+.application-list-button { width: 100%; text-align: left; padding: 20px; background: #f5f3f3; border: 2px solid transparent; border-radius: 16px; }
+.application-list-button[aria-pressed="true"] { border-color: #735c00; background: #fff9e7; }
+.application-list-button:hover { border-color: #cfc4c5; }
+.application-evidence { padding: 24px; border-radius: 16px; background: #f5f3f3; }
+.application-evidence-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+.application-evidence-grid article { min-width: 0; padding: 12px; background: white; border-radius: 16px; }
+.application-evidence-grid img { width: 100%; aspect-ratio: 1; object-fit: contain; border-radius: 12px; }
+.application-evidence input[type="file"] { max-width: 100%; min-height: 48px; }
+@media (max-width: 720px) { .application-evidence-grid { grid-template-columns: 1fr; } .application-evidence { padding: 16px; } }
+button:disabled { cursor: not-allowed; opacity: .6; }
+@media (max-width: 1200px) { .application-admin-grid { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .application-form-grid, .application-details { grid-template-columns: 1fr; gap: 24px; } }
+
+.qualification-input { min-height: 48px; }
+
+/* Shared FormInput uses the auth underline class; portal forms need full boxes. */
+.portal-layout .login-input { min-height:48px; border:1px solid #bcb4a7; border-radius:8px; padding:10px 12px; background:#fff; }
+.portal-layout .login-input:focus { border:1px solid #735c00; outline:2px solid #735c00; outline-offset:3px; }
+.portal-layout .login-input[aria-invalid="true"] { border-color:#ba1a1a; }
+
+.application-local-preview { width: 100%; max-height: 240px; object-fit: contain; border-radius: 12px; }

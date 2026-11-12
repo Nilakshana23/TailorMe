@@ -1,0 +1,60 @@
+-- Reproduce Storage's pre-upload INSERT probe then completed object INSERT.
+begin;
+create function pg_temp.assert_true(v boolean,label text) returns void language plpgsql as $$begin if v is distinct from true then raise exception 'FAIL: %',label;end if;end;$$;
+create function pg_temp.expect_error(q text,code text) returns void language plpgsql as $$declare actual text;begin begin execute q;exception when others then get stacked diagnostics actual=returned_sqlstate;if actual<>code then raise exception 'FAIL expected %, got %: %',code,actual,q;end if;return;end;raise exception 'FAIL expected rejection: %',q;end;$$;
+insert into auth.users(id) values('a9000000-0000-4000-8000-000000000001'),('a9000000-0000-4000-8000-000000000002');
+create function pg_temp.upload_path() returns text language sql as $$select 'a9000000-0000-4000-8000-000000000001/chat/a9000000-0000-4000-8000-000000000003/a9000000-0000-4000-8000-000000000004/a9000000-0000-4000-8000-000000000005.jpg'$$;
+create function pg_temp.probe(meta jsonb) returns void language sql as $$insert into storage.objects(bucket_id,name,metadata) values('request-chat-images',pg_temp.upload_path(),meta)$$;
+set local role authenticated;
+select set_config('request.jwt.claim.sub','50000000-0000-4000-8000-000000000002',true);
+select public.initialize_tailor_profile();
+select public.save_tailor_profile('{"shop_name":"Upload Atelier","description":"Bespoke garments for special occasions.","specialties":"Dresses","city":"Colombo","public_address":"123 Public Street","business_phone":"+94112223344","years_experience":5,"accepting_requests":true}',true,1);
+select set_config('request.jwt.claim.sub','a9000000-0000-4000-8000-000000000001',true);
+select public.send_tailoring_request('a9000000-0000-4000-8000-000000000003','50000000-0000-4000-8000-000000000002','dress','Testing authorized image uploads.',1,current_date+30);
+select public.reserve_chat_image('a9000000-0000-4000-8000-000000000005','a9000000-0000-4000-8000-000000000003','a9000000-0000-4000-8000-000000000004','jpg');
+savepoint upload_probe;
+select pg_temp.probe('{"mimetype":"image/jpeg","contentLength":100}');
+select pg_temp.assert_true(not public.chat_image_ready('a9000000-0000-4000-8000-000000000005'),'preflight length is not accepted as a completed file');
+select pg_temp.expect_error($q$select public.send_request_image_message('a9000000-0000-4000-8000-000000000004','a9000000-0000-4000-8000-000000000003','','["a9000000-0000-4000-8000-000000000005"]')$q$,'22023');
+rollback to savepoint upload_probe;release savepoint upload_probe;
+-- Every failed probe leaves the same reservation reusable.
+select pg_temp.expect_error($q$select pg_temp.probe('{"mimetype":"image/jpeg"}')$q$,'42501');
+select pg_temp.expect_error($q$select pg_temp.probe('{"mimetype":"image/jpeg","contentLength":0}')$q$,'42501');
+select pg_temp.expect_error($q$select pg_temp.probe('{"mimetype":"image/jpeg","contentLength":5242881}')$q$,'42501');
+select pg_temp.expect_error($q$select pg_temp.probe('{"mimetype":"image/jpeg","contentLength":-1}')$q$,'42501');
+select pg_temp.expect_error($q$select pg_temp.probe('{"mimetype":"image/jpeg","contentLength":"NaN"}')$q$,'42501');
+select pg_temp.expect_error($q$select pg_temp.probe('{"mimetype":"image/jpeg","contentLength":1.5}')$q$,'42501');
+select pg_temp.expect_error($q$select pg_temp.probe('{"mimetype":"image/png","contentLength":100}')$q$,'42501');
+select pg_temp.expect_error($q$select pg_temp.probe('{"mimetype":"text/html","contentLength":100}')$q$,'42501');
+select pg_temp.expect_error($q$select pg_temp.probe('{"mimetype":"image/jpeg","contentLength":100,"size":5242881}')$q$,'42501');
+-- The owner, addressed tailor and strangers cannot upload to someone else's slot.
+select set_config('request.jwt.claim.sub','50000000-0000-4000-8000-000000000002',true);
+select pg_temp.expect_error($q$select pg_temp.probe('{"mimetype":"image/jpeg","contentLength":100}')$q$,'42501');
+select set_config('request.jwt.claim.sub','a9000000-0000-4000-8000-000000000002',true);
+select pg_temp.expect_error($q$select pg_temp.probe('{"mimetype":"image/jpeg","contentLength":100}')$q$,'42501');
+select set_config('request.jwt.claim.sub','a9000000-0000-4000-8000-000000000001',true);
+select pg_temp.expect_error($q$insert into storage.objects(bucket_id,name,metadata) values('request-chat-images',replace(pg_temp.upload_path(),'000000000005.jpg','000000000006.jpg'),'{"mimetype":"image/jpeg","contentLength":100}')$q$,'42501');
+-- Completing the upload uses strict real size, then sending protects the file.
+select pg_temp.probe('{"mimetype":"image/jpeg","size":5242880}');
+select pg_temp.assert_true(public.chat_image_ready('a9000000-0000-4000-8000-000000000005'),'actual completed file is ready');
+select public.send_request_image_message('a9000000-0000-4000-8000-000000000004','a9000000-0000-4000-8000-000000000003','','["a9000000-0000-4000-8000-000000000005"]');
+select public.send_request_image_message('a9000000-0000-4000-8000-000000000004','a9000000-0000-4000-8000-000000000003','','["a9000000-0000-4000-8000-000000000005"]');
+select pg_temp.expect_error($q$select pg_temp.probe('{"mimetype":"image/jpeg","contentLength":100}')$q$,'42501');
+update storage.objects set metadata='{"mimetype":"image/jpeg","size":5}' where bucket_id='request-chat-images';
+delete from storage.objects where bucket_id='request-chat-images';
+select pg_temp.assert_true((select count(*)=1 and bool_and(metadata->>'size'='5242880') from storage.objects where bucket_id='request-chat-images'),'sent file retains bytes/metadata; no overwrite or cleanup');
+select set_config('request.jwt.claim.sub','50000000-0000-4000-8000-000000000002',true);
+select pg_temp.assert_true((select count(*)=1 from storage.objects where bucket_id='request-chat-images'),'participant read access unchanged');
+-- Tailor has a separate own draft and can use the same authorization phase.
+select public.reserve_chat_image('a9000000-0000-4000-8000-000000000007','a9000000-0000-4000-8000-000000000003','a9000000-0000-4000-8000-000000000008','png');
+savepoint tailor_probe;
+insert into storage.objects(bucket_id,name,metadata) values('request-chat-images','50000000-0000-4000-8000-000000000002/chat/a9000000-0000-4000-8000-000000000003/a9000000-0000-4000-8000-000000000008/a9000000-0000-4000-8000-000000000007.png','{"mimetype":"image/png","contentLength":5242880}');
+rollback to savepoint tailor_probe;release savepoint tailor_probe;
+reset role;
+update public.tailoring_requests set status='cancelled',cancelled_at=now() where id='a9000000-0000-4000-8000-000000000003';
+set local role authenticated;
+select pg_temp.expect_error($q$insert into storage.objects(bucket_id,name,metadata) values('request-chat-images','50000000-0000-4000-8000-000000000002/chat/a9000000-0000-4000-8000-000000000003/a9000000-0000-4000-8000-000000000008/a9000000-0000-4000-8000-000000000007.png','{"mimetype":"image/png","contentLength":100}')$q$,'42501');
+reset role;set local role anon;
+select pg_temp.expect_error($q$select pg_temp.probe('{"mimetype":"image/jpeg","contentLength":100}')$q$,'42501');
+reset role;rollback;
+select 'PASS: Storage pre-upload contentLength authorization, final size validation, ownership, terminal and immutable protections' as result;

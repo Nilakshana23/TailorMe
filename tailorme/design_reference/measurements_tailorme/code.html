@@ -1,0 +1,337 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Measurement Book | TailorMe</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&amp;family=Outfit:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#fbf9f9",
+                        "surface": "#fbf9f9",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#e3e2e2",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#e2e2e2",
+                        "secondary-fixed-dim": "#e9c349",
+                        "surface-container-highest": "#e3e2e2",
+                        "on-primary-fixed-variant": "#474747",
+                        "surface-dim": "#dbdad9",
+                        "surface-container-high": "#e9e8e7",
+                        "surface-container-low": "#f5f3f3",
+                        "on-surface-variant": "#4c4546",
+                        "on-tertiary-fixed-variant": "#474836",
+                        "primary": "#000000",
+                        "surface-container": "#efeded",
+                        "tertiary-container": "#1b1d0e",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#1b1b1b",
+                        "secondary-fixed": "#ffe088",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "on-primary-container": "#848484",
+                        "on-secondary-fixed-variant": "#574500",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#1b1d0e",
+                        "on-tertiary-container": "#848570",
+                        "background": "#fbf9f9",
+                        "inverse-surface": "#303031",
+                        "tertiary-fixed": "#e4e4cc",
+                        "on-error-container": "#93000a",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#1b1c1c",
+                        "on-background": "#1b1c1c",
+                        "outline-variant": "#cfc4c5",
+                        "on-secondary-fixed": "#241a00",
+                        "tertiary": "#000000",
+                        "on-secondary-container": "#745c00",
+                        "secondary-container": "#fed65b",
+                        "on-primary-fixed": "#1b1b1b",
+                        "secondary": "#735c00",
+                        "outline": "#7e7576",
+                        "surface-tint": "#5e5e5e",
+                        "inverse-on-surface": "#f2f0f0",
+                        "inverse-primary": "#c6c6c6",
+                        "tertiary-fixed-dim": "#c8c8b0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "container-max": "1440px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "20px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Playfair Display"],
+                        "body-lg": ["Outfit"],
+                        "headline-md": ["Playfair Display"],
+                        "label-sm": ["Outfit"],
+                        "label-md": ["Outfit"],
+                        "headline-sm": ["Playfair Display"],
+                        "body-md": ["Outfit"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .luxury-shadow {
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
+        }
+        .gold-indicator {
+            position: relative;
+        }
+        .gold-indicator::before {
+            content: '';
+            position: absolute;
+            left: -16px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: #fed65b;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-x-hidden">
+<!-- Top Navigation Bar (Shared Component Strategy) -->
+<nav class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-outline-variant/30 shadow-sm h-20">
+<div class="flex justify-between items-center px-margin-desktop h-full max-w-container-max mx-auto">
+<div class="text-headline-sm font-display-lg tracking-tighter text-primary">TailorMe</div>
+<!-- Desktop Links -->
+<div class="hidden md:flex items-center space-x-8 font-body-md text-body-md">
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Categories</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Designers</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Marketplace</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Our Story</a>
+</div>
+<div class="flex items-center space-x-6">
+<div class="hidden md:flex bg-surface-container rounded-full px-4 py-2 items-center">
+<span class="material-symbols-outlined text-outline">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-label-md ml-2 w-48" placeholder="Search designs..." type="text">
+</div>
+<span class="material-symbols-outlined cursor-pointer hover:text-secondary transition-colors">notifications</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-secondary transition-colors">shopping_bag</span>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional and stylish close-up portrait of a fashion-forward individual with a minimalist aesthetic, softly lit in a bright studio environment. The person has a clean, modern look, wearing a high-end black silk shirt. The background is a soft beige, maintaining a luxury light-mode digital showroom feel with high-contrast editorial vibes." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdIF9o3s79jWBFxaApO8v4Lpv4xPDm47kdnWjdRMxDHV7S9yZ0pascKe-ojxPps6HKNrTFCOEPygMqvdLImOnXOo-gckm_ZWCe51bC4QkY8mGzmYqztj8ao5ZJ0D4l9U2auFqC2PTgS3IU6QYGdFdyMQXrkUS027N_eqBQ_3TfM6WKYGnfooVasZeglFPmZw6HYbJrAMIsLMNnHFJ3L0Jq5T0r6NNdQGlgMv4F_o135Q6Y36b5ssNlsksrFjUTDHY7_2_ecYhyx1c">
+</div>
+</div>
+</div>
+</nav>
+<!-- Side Navigation Bar (Hidden on Mobile) -->
+<aside class="hidden md:flex flex-col h-screen w-[280px] fixed left-0 top-0 bg-surface-container-low border-r border-outline-variant/20 py-8 px-4 z-40 mt-20">
+<div class="mb-10 px-4">
+<div class="text-headline-sm font-display-lg text-primary">Artisan Panel</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Master Tailor</div>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined mr-3">straighten</span> Orders
+            </a>
+<a class="flex items-center px-4 py-3 rounded-lg text-primary font-bold border-l-4 border-secondary-container bg-surface-container-high font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined mr-3">content_cut</span> Measurement Book
+            </a>
+<a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined mr-3">apparel</span> My Collection
+            </a>
+<a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined mr-3">monitoring</span> Analytics
+            </a>
+<a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined mr-3">chat_bubble</span> Messages
+            </a>
+</nav>
+<div class="mt-auto space-y-2">
+<a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined mr-3">settings</span> Settings
+            </a>
+<a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined mr-3">help</span> Support
+            </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-[280px] mt-20 min-h-screen bg-surface-bright pb-24">
+<header class="px-margin-desktop py-12">
+<div class="max-w-4xl">
+<h1 class="font-display-lg text-display-lg mb-4">Precision Measurement</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant">Complete your profile to ensure every garment from TailorMe fits like a second skin. Use our visual guide or schedule a professional session.</p>
+</div>
+</header>
+<section class="px-margin-desktop grid grid-cols-1 lg:grid-cols-12 gap-gutter max-w-container-max mx-auto">
+<!-- Left Column: Visual Guide & Virtual Fitting -->
+<div class="lg:col-span-5 space-y-8">
+<!-- Visual Guide Card -->
+<div class="bg-surface-container-lowest rounded-2xl p-8 luxury-shadow border border-outline-variant/10">
+<h2 class="font-headline-sm text-headline-sm mb-6 flex items-center">
+<span class="material-symbols-outlined mr-2">visibility</span> Visual Guide
+                    </h2>
+<div class="aspect-[4/5] relative rounded-xl overflow-hidden bg-surface-container-low mb-6">
+<img class="w-full h-full object-cover" data-alt="A clean, minimalist fashion illustration showing a sleek human silhouette with highlighted measuring points (chest, waist, hips, shoulders). The style is high-contrast editorial with thin black lines and soft gold glowing points on a soft beige background, mimicking a professional tailor's technical drawing in a luxury digital interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzSXP67kG92YyKGaZvaYnFOM4Pel7cuA3kGmULtHD3wlL1bcm3h6hhEjaSzqw-fqwxMC5IU3ukbrMw0zwJfXbhaoQocJ-oBNZNemGzrIRaFOw8qLYKXppP3T4URiSpynbxluaYHi07SeSjjEIGP3ovrPwOVbiK29avp1SpKkSXvbipLRgE6rTQqO_eTWZZWBuFO362WoHiD-8CYdGSEa-XqwF8ecgucJJpSFbR2XCN8TO_0Mf1ju0Id_SSPdiAqYyw6pFC5juLqLs">
+<div class="absolute bottom-4 left-4 right-4 bg-primary/80 backdrop-blur text-on-primary p-4 rounded-lg">
+<p class="text-label-md font-label-md italic">"Ensure the tape is snug but not tight. Keep your posture natural."</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="p-4 bg-surface-container-low rounded-lg">
+<div class="font-label-md text-label-md mb-1">Step 01</div>
+<div class="text-body-md font-body-md">Neck to Waistline</div>
+</div>
+<div class="p-4 bg-surface-container-low rounded-lg">
+<div class="font-label-md text-label-md mb-1">Step 02</div>
+<div class="text-body-md font-body-md">Sleeve &amp; Shoulder</div>
+</div>
+</div>
+</div>
+<!-- Virtual Fitting CTA -->
+<div class="bg-secondary-container rounded-2xl p-8 luxury-shadow flex items-start space-x-4">
+<span class="material-symbols-outlined text-3xl text-on-secondary-container">videocam</span>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-secondary-container mb-2">Unsure about your fit?</h3>
+<p class="text-body-md font-body-md text-on-secondary-container/80 mb-6">Schedule a 15-minute virtual fitting session with one of our master tailors for guaranteed accuracy.</p>
+<button class="px-6 py-3 bg-primary text-on-primary rounded-pill font-label-md text-label-md hover:scale-105 transition-transform">
+                            Schedule a Virtual Fitting
+                        </button>
+</div>
+</div>
+</div>
+<!-- Right Column: Form Fields -->
+<div class="lg:col-span-7 space-y-8">
+<form class="bg-surface-container-lowest rounded-2xl p-8 lg:p-12 luxury-shadow border border-outline-variant/10" id="measurement-form">
+<!-- Standard Measurements -->
+<div class="mb-12">
+<div class="flex justify-between items-end mb-8 border-b border-outline-variant pb-4">
+<h2 class="font-headline-sm text-headline-sm">Standard Profile</h2>
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-widest">Inches (in)</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-8">
+<div class="group">
+<label class="block text-label-md font-label-md text-on-surface-variant group-focus-within:text-primary transition-colors mb-2">Neck Circumference</label>
+<input class="w-full bg-surface-container-low border-b-2 border-transparent focus:border-primary border-t-0 border-x-0 rounded-t-lg px-4 py-3 focus:ring-0 transition-all" placeholder="15.5" step="0.1" type="number">
+</div>
+<div class="group">
+<label class="block text-label-md font-label-md text-on-surface-variant group-focus-within:text-primary transition-colors mb-2">Chest Width</label>
+<input class="w-full bg-surface-container-low border-b-2 border-transparent focus:border-primary border-t-0 border-x-0 rounded-t-lg px-4 py-3 focus:ring-0 transition-all" placeholder="40.0" step="0.1" type="number">
+</div>
+<div class="group">
+<label class="block text-label-md font-label-md text-on-surface-variant group-focus-within:text-primary transition-colors mb-2">Sleeve Length</label>
+<input class="w-full bg-surface-container-low border-b-2 border-transparent focus:border-primary border-t-0 border-x-0 rounded-t-lg px-4 py-3 focus:ring-0 transition-all" placeholder="33.0" step="0.1" type="number">
+</div>
+<div class="group">
+<label class="block text-label-md font-label-md text-on-surface-variant group-focus-within:text-primary transition-colors mb-2">Waist</label>
+<input class="w-full bg-surface-container-low border-b-2 border-transparent focus:border-primary border-t-0 border-x-0 rounded-t-lg px-4 py-3 focus:ring-0 transition-all" placeholder="34.0" step="0.1" type="number">
+</div>
+</div>
+</div>
+<!-- Custom / Detailed Measurements -->
+<div class="mb-12">
+<div class="flex justify-between items-end mb-8 border-b border-outline-variant pb-4">
+<h2 class="font-headline-sm text-headline-sm">Artisan Details</h2>
+<span class="material-symbols-outlined text-outline">info</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-8">
+<div class="group">
+<label class="block text-label-md font-label-md text-on-surface-variant group-focus-within:text-primary transition-colors mb-2">Shoulder to Shoulder</label>
+<input class="w-full bg-surface-container-low border-b-2 border-transparent focus:border-primary border-t-0 border-x-0 rounded-t-lg px-4 py-3 focus:ring-0 transition-all" placeholder="18.5" step="0.1" type="number">
+</div>
+<div class="group">
+<label class="block text-label-md font-label-md text-on-surface-variant group-focus-within:text-primary transition-colors mb-2">Bicep Circumference</label>
+<input class="w-full bg-surface-container-low border-b-2 border-transparent focus:border-primary border-t-0 border-x-0 rounded-t-lg px-4 py-3 focus:ring-0 transition-all" placeholder="14.0" step="0.1" type="number">
+</div>
+<div class="group md:col-span-2">
+<label class="block text-label-md font-label-md text-on-surface-variant group-focus-within:text-primary transition-colors mb-2">Special Posture Notes (Optional)</label>
+<textarea class="w-full bg-surface-container-low border-b-2 border-transparent focus:border-primary border-t-0 border-x-0 rounded-t-lg px-4 py-3 focus:ring-0 transition-all" placeholder="e.g., Sloping shoulders, athletic build..." rows="3"></textarea>
+</div>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-outline-variant/30">
+<div class="flex items-center text-on-surface-variant">
+<span class="material-symbols-outlined mr-2 text-secondary">verified_user</span>
+<span class="text-label-sm font-label-sm">Privacy protected artisan data</span>
+</div>
+<div class="flex space-x-4 w-full md:w-auto">
+<button class="flex-1 md:flex-none px-8 py-4 border border-primary text-primary rounded-lg font-label-md text-label-md hover:bg-surface-container transition-colors" type="button">
+                                Reset
+                            </button>
+<button class="flex-1 md:flex-none px-8 py-4 bg-primary text-on-primary rounded-lg font-label-md text-label-md shadow-lg hover:shadow-xl hover:translate-y-[-2px] transition-all flex items-center justify-center" type="submit">
+<span class="material-symbols-outlined mr-2">save</span> Save to Measurement Book
+                            </button>
+</div>
+</div>
+</form>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component Strategy) -->
+<footer class="w-full py-12 bg-primary text-on-primary mt-auto relative z-50">
+<div class="flex flex-col items-center justify-center space-y-6 px-margin-desktop max-w-container-max mx-auto text-center">
+<div class="font-display-lg text-headline-sm text-on-primary">TailorMe</div>
+<div class="flex flex-wrap justify-center gap-8 font-label-sm text-label-sm text-on-primary/70">
+<a class="hover:text-secondary-fixed transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-secondary-fixed transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-secondary-fixed transition-colors" href="#">Shipping</a>
+<a class="hover:text-secondary-fixed transition-colors" href="#">Returns</a>
+<a class="hover:text-secondary-fixed transition-colors" href="#">Contact</a>
+</div>
+<p class="font-label-sm text-label-sm text-on-primary/50">© 2024 TailorMe Luxury Custom Apparel. All rights reserved.</p>
+</div>
+</footer>
+<!-- Interactive Scripts -->
+<script>
+        // Simple micro-interaction for form submission
+        document.getElementById('measurement-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalContent = btn.innerHTML;
+            
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin mr-2">sync</span> Saving...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.innerHTML = '<span class="material-symbols-outlined mr-2">check_circle</span> Saved Successfully';
+                btn.classList.replace('bg-primary', 'bg-secondary-container');
+                btn.classList.replace('text-on-primary', 'text-on-secondary-container');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalContent;
+                    btn.classList.replace('bg-secondary-container', 'bg-primary');
+                    btn.classList.replace('text-on-secondary-container', 'text-on-primary');
+                    btn.disabled = false;
+                }, 2000);
+            }, 1500);
+        });
+
+        // Hover effect for side nav
+        const navLinks = document.querySelectorAll('aside nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                if (!link.classList.contains('border-l-4')) {
+                    link.style.transform = 'translateX(4px)';
+                }
+            });
+            link.addEventListener('mouseleave', () => {
+                link.style.transform = 'translateX(0px)';
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,555 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>TailorMe | Artisan Panel</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&amp;family=Outfit:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#fbf9f9",
+                        "surface": "#fbf9f9",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#e3e2e2",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#e2e2e2",
+                        "secondary-fixed-dim": "#e9c349",
+                        "surface-container-highest": "#e3e2e2",
+                        "on-primary-fixed-variant": "#474747",
+                        "surface-dim": "#dbdad9",
+                        "surface-container-high": "#e9e8e7",
+                        "surface-container-low": "#f5f3f3",
+                        "on-surface-variant": "#4c4546",
+                        "on-tertiary-fixed-variant": "#474836",
+                        "primary": "#000000",
+                        "surface-container": "#efeded",
+                        "tertiary-container": "#1b1d0e",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#1b1b1b",
+                        "secondary-fixed": "#ffe088",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "on-primary-container": "#848484",
+                        "on-secondary-fixed-variant": "#574500",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#1b1d0e",
+                        "on-tertiary-container": "#848570",
+                        "background": "#fbf9f9",
+                        "inverse-surface": "#303031",
+                        "tertiary-fixed": "#e4e4cc",
+                        "on-error-container": "#93000a",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#1b1c1c",
+                        "on-background": "#1b1c1c",
+                        "outline-variant": "#cfc4c5",
+                        "on-secondary-fixed": "#241a00",
+                        "tertiary": "#000000",
+                        "on-secondary-container": "#745c00",
+                        "secondary-container": "#fed65b",
+                        "on-primary-fixed": "#1b1b1b",
+                        "secondary": "#735c00",
+                        "outline": "#7e7576",
+                        "surface-tint": "#5e5e5e",
+                        "inverse-on-surface": "#f2f0f0",
+                        "inverse-primary": "#c6c6c6",
+                        "tertiary-fixed-dim": "#c8c8b0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "container-max": "1440px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "20px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Playfair Display"],
+                        "body-lg": ["Outfit"],
+                        "headline-md": ["Playfair Display"],
+                        "label-sm": ["Outfit"],
+                        "label-md": ["Outfit"],
+                        "headline-sm": ["Playfair Display"],
+                        "body-md": ["Outfit"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .nav-item-active {
+            border-left: 4px solid #fed65b; /* secondary-container */
+        }
+        .bento-card {
+            background-color: #ffffff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .bento-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e0e0e0;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-x-hidden">
+<!-- SIDEBAR -->
+<aside class="h-screen w-[280px] fixed left-0 top-0 bg-surface-container-low border-r border-outline-variant/20 flex flex-col z-50">
+<!-- Brand Header -->
+<div class="p-8 flex items-center gap-4">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">content_cut</span>
+</div>
+<div>
+<h1 class="text-headline-sm font-display-lg text-primary tracking-tighter leading-none">Artisan Panel</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant/60 uppercase tracking-widest mt-1">Master Tailor</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex-1 px-4 mt-4 space-y-1 overflow-y-auto custom-scrollbar">
+<!-- Search & Filter Tab logic maps to 'Dashboard' as active -->
+<a class="flex items-center gap-4 py-3 px-4 text-primary font-bold border-l-4 border-secondary-container bg-surface-container-high transition-transform active:scale-100 scale-95 duration-300" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 py-3 px-4 text-on-surface-variant/60 hover:bg-surface-container transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">straighten</span>
+<span class="font-label-md text-label-md">Orders</span>
+</a>
+<a class="flex items-center gap-4 py-3 px-4 text-on-surface-variant/60 hover:bg-surface-container transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">content_cut</span>
+<span class="font-label-md text-label-md">Measurement Book</span>
+</a>
+<a class="flex items-center gap-4 py-3 px-4 text-on-surface-variant/60 hover:bg-surface-container transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">apparel</span>
+<span class="font-label-md text-label-md">My Collection</span>
+</a>
+<a class="flex items-center gap-4 py-3 px-4 text-on-surface-variant/60 hover:bg-surface-container transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+<a class="flex items-center gap-4 py-3 px-4 text-on-surface-variant/60 hover:bg-surface-container transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-label-md text-label-md">Messages</span>
+</a>
+<div class="pt-8 pb-4">
+<p class="px-4 font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant/40 mb-2">Management</p>
+<a class="flex items-center gap-4 py-3 px-4 text-on-surface-variant/60 hover:bg-surface-container transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+<a class="flex items-center gap-4 py-3 px-4 text-on-surface-variant/60 hover:bg-surface-container transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+</div>
+</nav>
+<!-- CTA & Profile -->
+<div class="p-6 border-t border-outline-variant/20 bg-surface-container-lowest">
+<button class="w-full bg-primary text-on-primary py-3 rounded-lg font-label-md text-label-md hover:opacity-90 transition-opacity flex items-center justify-center gap-2 mb-4">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                New Design
+            </button>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a master tailor in a minimalist atelier, dressed in high-fashion charcoal linens, holding a measuring tape. The lighting is soft and cinematic, highlighting the expert craftsmanship environment with fabrics in the background. The aesthetic is clean, luxurious, and editorial." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDU6gqHXMNadO2W1QpONCckCfn1zPbHFzg0J6fQsGCcFBnMRLrrThdH8AQUXYFHVO2b17D3W2T0MFOfTteV2L2-lYUns3Z8juDhCOvBOPxYuatAV602EDkxft37Jrafz1qpIEYpIS0aCXbx4bRMcNu8ZF488JeuhXwOzi-fFf3b-KmIx7XSZ3o4sT1Fljc5rBEvLvs4xqtJUqAQcs9A4ve7lLH9TLOUdGrXnz_vOoHSaExvo9_eP9tR4ELllip2bqlotfajcYmDOz0">
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="font-label-md text-label-md text-primary truncate">Julian Thorne</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant/60">Admin Access</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- MAIN CONTENT -->
+<main class="ml-[280px] min-h-screen pb-20">
+<!-- TOP APP BAR -->
+<header class="h-20 px-10 flex items-center justify-between sticky top-0 bg-surface/80 backdrop-blur-md z-40">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary">Overview</h2>
+<p class="font-label-md text-label-md text-on-surface-variant/60">Welcome back, julian. Here's what's happening today.</p>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative">
+<input class="bg-surface-container-low border-none rounded-full px-5 py-2 pl-12 text-label-md w-64 focus:ring-1 focus:ring-primary" placeholder="Search analytics..." type="text">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/40">search</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center text-on-surface-variant/80 hover:bg-surface-container transition-colors rounded-full">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center text-on-surface-variant/80 hover:bg-surface-container transition-colors rounded-full">
+<span class="material-symbols-outlined">calendar_today</span>
+</button>
+</div>
+</div>
+</header>
+<!-- DASHBOARD CANVAS -->
+<div class="px-10 mt-8 space-y-10 max-w-container-max mx-auto">
+<!-- ANALYTICS GRID -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<!-- Total Revenue -->
+<div class="bento-card p-6 rounded-2xl border border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<span class="p-2 bg-secondary-container/20 text-secondary rounded-lg">
+<span class="material-symbols-outlined">payments</span>
+</span>
+<span class="text-green-600 font-label-sm text-label-sm flex items-center gap-1">+12% <span class="material-symbols-outlined text-[14px]">trending_up</span></span>
+</div>
+<p class="text-on-surface-variant/60 font-label-md text-label-md uppercase tracking-wider">Total Revenue</p>
+<h3 class="text-headline-sm font-display-lg mt-1">$142,850.00</h3>
+</div>
+<!-- New Customers -->
+<div class="bento-card p-6 rounded-2xl border border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<span class="p-2 bg-primary-container/10 text-primary rounded-lg">
+<span class="material-symbols-outlined">group_add</span>
+</span>
+<span class="text-green-600 font-label-sm text-label-sm flex items-center gap-1">+8% <span class="material-symbols-outlined text-[14px]">trending_up</span></span>
+</div>
+<p class="text-on-surface-variant/60 font-label-md text-label-md uppercase tracking-wider">Active Customers</p>
+<h3 class="text-headline-sm font-display-lg mt-1">1,204</h3>
+</div>
+<!-- Tailor Network -->
+<div class="bento-card p-6 rounded-2xl border border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<span class="p-2 bg-surface-container-high text-primary rounded-lg">
+<span class="material-symbols-outlined">design_services</span>
+</span>
+<span class="text-on-surface-variant/40 font-label-sm text-label-sm">Steady</span>
+</div>
+<p class="text-on-surface-variant/60 font-label-md text-label-md uppercase tracking-wider">Verified Tailors</p>
+<h3 class="text-headline-sm font-display-lg mt-1">84</h3>
+</div>
+<!-- Fulfillment Rate -->
+<div class="bento-card p-6 rounded-2xl border border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<span class="p-2 bg-tertiary-fixed text-primary rounded-lg">
+<span class="material-symbols-outlined">task_alt</span>
+</span>
+<span class="text-red-500 font-label-sm text-label-sm flex items-center gap-1">-2% <span class="material-symbols-outlined text-[14px]">trending_down</span></span>
+</div>
+<p class="text-on-surface-variant/60 font-label-md text-label-md uppercase tracking-wider">Fulfillment Rate</p>
+<h3 class="text-headline-sm font-display-lg mt-1">94.2%</h3>
+</div>
+</section>
+<!-- GROWTH CHART & VERIFICATION QUEUE -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Revenue Chart Placeholder -->
+<div class="lg:col-span-2 bento-card p-8 rounded-2xl border border-outline-variant/10 h-full flex flex-col">
+<div class="flex justify-between items-center mb-8">
+<h4 class="font-headline-sm text-headline-sm">Growth Overview</h4>
+<div class="flex gap-2">
+<button class="px-3 py-1 bg-primary text-on-primary rounded-md text-label-sm">Revenue</button>
+<button class="px-3 py-1 bg-surface-container-low text-on-surface-variant rounded-md text-label-sm">Users</button>
+</div>
+</div>
+<!-- Mock Chart Visualization -->
+<div class="flex-1 relative flex items-end justify-between gap-2 min-h-[300px]">
+<div class="w-full h-px bg-outline-variant/20 absolute bottom-0"></div>
+<div class="flex-1 bg-secondary-container/20 rounded-t-lg h-[40%] group relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-on-primary text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">$32k</div>
+</div>
+<div class="flex-1 bg-secondary-container/40 rounded-t-lg h-[65%] group relative"></div>
+<div class="flex-1 bg-secondary-container/20 rounded-t-lg h-[50%] group relative"></div>
+<div class="flex-1 bg-secondary-container/60 rounded-t-lg h-[80%] group relative"></div>
+<div class="flex-1 bg-secondary-container/30 rounded-t-lg h-[60%] group relative"></div>
+<div class="flex-1 bg-secondary-container/80 rounded-t-lg h-[95%] group relative"></div>
+<div class="flex-1 bg-secondary-container h-[70%] group relative"></div>
+</div>
+<div class="flex justify-between mt-4 text-label-sm text-on-surface-variant/40">
+<span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+</div>
+</div>
+<!-- Tailor Verification Queue -->
+<div class="bento-card p-8 rounded-2xl border border-outline-variant/10">
+<div class="flex items-center justify-between mb-6">
+<h4 class="font-headline-sm text-headline-sm">Verifications</h4>
+<span class="bg-primary text-on-primary text-[10px] px-2 py-0.5 rounded-full">4 Pending</span>
+</div>
+<div class="space-y-6">
+<!-- Verification Item 1 -->
+<div class="flex items-center gap-4 group cursor-pointer">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container-high shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close up of a professional studio portrait of an elderly artisan tailor with silver hair, wearing classic black spectacles. High-key studio lighting with soft shadows. Pristine, high-fashion aesthetic in a clean light-mode environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDM9ZqtikEIzB8czHRLrEoBDn12P3EZGBvbTyzd4ArR1w9mON72qHlwrVREPtKxDqezsQrrvqpd-Bwypb3y5dsQlXVW5egkkeO9y3FS2PJ24J4mACvzXa0Yy7wiT1QQvj0ZK-kaSTE_7gavu_JIJC1_s9NT_QRnhj3O6dZSx0WeuQjvUIpsbS70lcOp872sTV4nKxB726-7qveYAGCYCL1__VLdbR-B2H9GfI1r10THyYWb8JdxrjnTdee1sbnPUsMJLAhMZBFoERI">
+</div>
+<div class="flex-1">
+<p class="font-label-md text-label-md text-primary">Aura V. Studios</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant/60">London, UK • Bespoke Silk</p>
+</div>
+<button class="material-symbols-outlined text-primary group-hover:bg-secondary-container p-1 rounded-full transition-colors">chevron_right</button>
+</div>
+<!-- Verification Item 2 -->
+<div class="flex items-center gap-4 group cursor-pointer">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container-high shrink-0">
+<img class="w-full h-full object-cover" data-alt="Portrait of a young modern tailor with intricate tattoos on hands, working on a minimal white linen jacket. Sharp lighting, clean background, editorial fashion photography style with a focus on artisanal details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2cRv4igK7iAPlfy8J2_a8JHEqaUIyhaSEu4lrbtalCAXgxG9Q0Z2sKx6Ruuq3K6tvU8m2icKAPmcUanm8w_Ngamr3OFjajbMec56Ce2RsQIjVBpNCvW5pv_XCK3KF2kAMKdMTTAs9PAmqCZ_AQ65FmD2b1MG4pMnfi58U97x7eGcKhOy9va1WBCruGjuowDIo_O39A9C2Kzf8maAWvCBZ-4XToQirxip4L1q9Deb4CLNllQTweGRM2bBaA5jr9TKwI0SaaomEY8U">
+</div>
+<div class="flex-1">
+<p class="font-label-md text-label-md text-primary">The Modern Hem</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant/60">Milan, IT • Avant-garde</p>
+</div>
+<button class="material-symbols-outlined text-primary group-hover:bg-secondary-container p-1 rounded-full transition-colors">chevron_right</button>
+</div>
+<!-- Verification Item 3 -->
+<div class="flex items-center gap-4 group cursor-pointer">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container-high shrink-0">
+<img class="w-full h-full object-cover" data-alt="Portrait of a female luxury apparel designer in a minimalist white studio. Her style is sleek and professional. The image is bright with a clean, high-contrast black and white palette. Editorial aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOL3WVWp4zSEnKPuW6U06v6LF6Uu7fJm2InxmpBmStJVm0aYQe1q6C4SCEjcV0xj-FUeuHBaJdovGqoO3FPyk50oV2KwN5PgGh6kJ60ddd1kZUJXXYf7w6FDTvKJil0_7nXCsPcQ4zRUe7Lirpf2ybKRyZAma2uKX0DYGC3Ki6d-xz0F6gbvDHiSDyjgV53TzVQG9PFjMio9VKfCYPGUtIwq2iF1LmwJv5C-NbHXGVJSBoeaOqGj_WGq8G6X0YuxmLQOv423yhisw">
+</div>
+<div class="flex-1">
+<p class="font-label-md text-label-md text-primary">Sienna Luxury</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant/60">Paris, FR • Bridal</p>
+</div>
+<button class="material-symbols-outlined text-primary group-hover:bg-secondary-container p-1 rounded-full transition-colors">chevron_right</button>
+</div>
+</div>
+<button class="w-full mt-8 border border-primary text-primary py-2 rounded-lg font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-all">View All Applications</button>
+</div>
+</section>
+<!-- USER MANAGEMENT TABLE -->
+<section class="bento-card rounded-2xl border border-outline-variant/10 overflow-hidden">
+<div class="p-8 border-b border-outline-variant/10 flex justify-between items-center">
+<div>
+<h4 class="font-headline-sm text-headline-sm">User Management</h4>
+<div class="flex gap-4 mt-2">
+<button class="text-label-md font-bold text-primary border-b-2 border-primary pb-1">All Accounts</button>
+<button class="text-label-md text-on-surface-variant/60 hover:text-primary transition-colors pb-1">Customers</button>
+<button class="text-label-md text-on-surface-variant/60 hover:text-primary transition-colors pb-1">Tailors</button>
+</div>
+</div>
+<button class="flex items-center gap-2 border border-outline-variant/30 px-4 py-2 rounded-lg text-label-md hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                        Advanced Filters
+                    </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low/30">
+<th class="px-8 py-4 font-label-md text-label-md text-on-surface-variant/60 uppercase tracking-widest">User</th>
+<th class="px-8 py-4 font-label-md text-label-md text-on-surface-variant/60 uppercase tracking-widest">Role</th>
+<th class="px-8 py-4 font-label-md text-label-md text-on-surface-variant/60 uppercase tracking-widest">Status</th>
+<th class="px-8 py-4 font-label-md text-label-md text-on-surface-variant/60 uppercase tracking-widest">Joining Date</th>
+<th class="px-8 py-4 font-label-md text-label-md text-on-surface-variant/60 uppercase tracking-widest">Revenue Impact</th>
+<th class="px-8 py-4 font-label-md text-label-md text-on-surface-variant/60 uppercase tracking-widest text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-surface-container-high overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Portrait of a sophisticated high-fashion customer, a young man wearing a designer black turtleneck. The studio lighting is minimal and high-end. High contrast, luxury mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCf0KyuIUN9ImUwuI9-1dZqkk9pabHeJj-ijbccGFl7_1uNUcdmyRQEo7AxAhQopxyFf8MaA_3IA5jxT2V4GMG1N_ONqLSCd1pz9ZRv8gvp_xKyQucsDjNxPhTRq5HHEENAaB7zXFHIg1SLfMmcUIiSLJw14eJWmvKQ2huS80iXiMOZioiSCmEVcdnculgPGbPdhECKdkEzv8HodaK4sA1saAhNR5YeEQbdFFUsH9qrUHCSo1qlK3nF5qV050U2h8qe_nRVY6n7KpQ">
+</div>
+<div class="leading-tight">
+<p class="font-label-md text-label-md text-primary">Marcus Vane</p>
+<p class="text-[12px] text-on-surface-variant/50">marcus@example.com</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-5">
+<span class="text-label-sm px-2 py-1 bg-surface-container-high text-primary rounded">Customer</span>
+</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+<span class="text-label-sm">Active</span>
+</div>
+</td>
+<td class="px-8 py-5 text-label-sm text-on-surface-variant/60">Oct 12, 2023</td>
+<td class="px-8 py-5 font-label-md text-label-md">$12,400</td>
+<td class="px-8 py-5 text-right">
+<button class="material-symbols-outlined text-on-surface-variant/40 group-hover:text-primary transition-colors">more_horiz</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-surface-container-high overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Artistic portrait of a master weaver in a sunlit atelier. The environment is warm, with golden hour lighting through a large window. She is surrounded by rolls of silk. The style is soft, editorial, and artisanal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFo8S1yHPrvzdHvMq178cKJqLbMXQKk7Jlf3yh_lana_nBshmbSi_Zi-e30c7GuwTo2Lo_nzqR-w7RPyLOD7vdxXylyHmDL3hCC7SL8qCy_0Alc0QVk9eqVeggPAurOPKEAZ9T-h89TBsGhvHutrTha4wuEYKzRii--289pD6oBC1OmcPjHXRDukDzmbOfw0wB3Y7cGvL20FdGRWC7aAnUY32V6W1HHVyRqdjbKzpqCK0QoMwU0rgAIQfQJylJPvUnKgVSEoimO-A">
+</div>
+<div class="leading-tight">
+<p class="font-label-md text-label-md text-primary">Elena Rossi</p>
+<p class="text-[12px] text-on-surface-variant/50">elena.silk@atelier.it</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-5">
+<span class="text-label-sm px-2 py-1 bg-secondary-container/20 text-secondary font-bold rounded">Tailor</span>
+</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+<span class="text-label-sm">Verified</span>
+</div>
+</td>
+<td class="px-8 py-5 text-label-sm text-on-surface-variant/60">Sept 04, 2023</td>
+<td class="px-8 py-5 font-label-md text-label-md">$84,200</td>
+<td class="px-8 py-5 text-right">
+<button class="material-symbols-outlined text-on-surface-variant/40 group-hover:text-primary transition-colors">more_horiz</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-surface-container-high overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Minimalist headshot of a corporate fashion consultant in a neutral gray studio. Soft white lighting, modern business attire. The aesthetic is clean and professional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOTU_MhHFmNRdmOB1jxVHUqhytzVYXsYePG6edRltiGaUaIyp6Z4MdDlNjR4_sodBlUnjmfpacPN29u37VpybEWcB51a2QLZuC1gIubKDQk2WwcZRSYsorUn2PycGYpnZCOsugchxA_A1Q4d2sxLp3YMUUCiyuRGwtUA6XfV4SBe2KB89zU9POTCoKRld6_e09I44X25QiGXYlfQyDdiYN7CpZYHUsPtuyY9ZSx8SWp_N5KtRxbj9794ROXgKJ3MGkBxJuR40myjE">
+</div>
+<div class="leading-tight">
+<p class="font-label-md text-label-md text-primary">Dominic West</p>
+<p class="text-[12px] text-on-surface-variant/50">d.west@corporate.com</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-5">
+<span class="text-label-sm px-2 py-1 bg-surface-container-high text-primary rounded">Customer</span>
+</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-yellow-500"></span>
+<span class="text-label-sm">Idle</span>
+</div>
+</td>
+<td class="px-8 py-5 text-label-sm text-on-surface-variant/60">Jan 12, 2024</td>
+<td class="px-8 py-5 font-label-md text-label-md">$2,100</td>
+<td class="px-8 py-5 text-right">
+<button class="material-symbols-outlined text-on-surface-variant/40 group-hover:text-primary transition-colors">more_horiz</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-6 bg-surface-container-low/20 flex justify-between items-center text-label-sm text-on-surface-variant/60">
+<p>Showing 3 of 1,288 records</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 border border-outline-variant/30 rounded hover:bg-surface-container">Previous</button>
+<button class="px-3 py-1 bg-primary text-on-primary rounded">1</button>
+<button class="px-3 py-1 border border-outline-variant/30 rounded hover:bg-surface-container">2</button>
+<button class="px-3 py-1 border border-outline-variant/30 rounded hover:bg-surface-container">Next</button>
+</div>
+</div>
+</section>
+<!-- SYSTEM HEALTH & SETTINGS QUICK ACCESS -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- System Health -->
+<div class="bento-card p-8 rounded-2xl border border-outline-variant/10">
+<h4 class="font-headline-sm text-headline-sm mb-6 flex items-center gap-2">
+                        System Health
+                        <span class="flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+</span>
+</h4>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between text-label-md mb-2">
+<span class="text-on-surface-variant/60">API Response Time</span>
+<span class="font-bold">42ms</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[95%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-label-md mb-2">
+<span class="text-on-surface-variant/60">Database Load</span>
+<span class="font-bold">14%</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[14%]"></div>
+</div>
+</div>
+<div class="flex items-center gap-4 pt-4 border-t border-outline-variant/10">
+<div class="flex items-center gap-2 text-label-sm text-on-surface-variant/60">
+<span class="material-symbols-outlined text-[16px] text-green-500">cloud_done</span>
+                                Core Services Active
+                            </div>
+<div class="flex items-center gap-2 text-label-sm text-on-surface-variant/60">
+<span class="material-symbols-outlined text-[16px] text-green-500">shield_lock</span>
+                                SSL Secure
+                            </div>
+</div>
+</div>
+</div>
+<!-- Global Configuration -->
+<div class="bento-card p-8 rounded-2xl border border-outline-variant/10">
+<h4 class="font-headline-sm text-headline-sm mb-6">Global Settings</h4>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl">
+<div>
+<p class="font-label-md text-label-md text-primary">Marketplace Mode</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant/60">Open to public browsing</p>
+</div>
+<button class="w-12 h-6 bg-primary rounded-full relative flex items-center px-1">
+<div class="w-4 h-4 bg-on-primary rounded-full ml-auto"></div>
+</button>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl">
+<div>
+<p class="font-label-md text-label-md text-primary">New Tailor Registrations</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant/60">Verification required manually</p>
+</div>
+<button class="w-12 h-6 bg-primary rounded-full relative flex items-center px-1">
+<div class="w-4 h-4 bg-on-primary rounded-full ml-auto"></div>
+</button>
+</div>
+<button class="w-full py-3 text-label-md font-bold text-primary hover:bg-surface-container transition-colors rounded-lg flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+                            Full System Config
+                        </button>
+</div>
+</div>
+</section>
+</div>
+<!-- FOOTER -->
+<footer class="mt-20 border-t border-outline-variant/10 py-10 px-10">
+<div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<p class="font-label-sm text-label-sm text-on-surface-variant/40">© 2024 TailorMe Luxury Custom Apparel. All rights reserved.</p>
+<div class="flex gap-8">
+<a class="font-label-sm text-label-sm text-on-surface-variant/60 hover:text-primary transition-colors" href="#">Documentation</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant/60 hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant/60 hover:text-primary transition-colors" href="#">API Keys</a>
+</div>
+</div>
+</footer>
+</main>
+<script>
+        // Micro-interaction for growth chart
+        document.querySelectorAll('.flex-1.bg-secondary-container').forEach(bar => {
+            bar.addEventListener('mouseenter', () => {
+                bar.classList.add('scale-x-105');
+                bar.style.transition = 'transform 0.2s ease';
+            });
+            bar.addEventListener('mouseleave', () => {
+                bar.classList.remove('scale-x-105');
+            });
+        });
+    </script>
+</body></html>

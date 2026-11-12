@@ -1,0 +1,66 @@
+begin;
+create function pg_temp.assert_true(v boolean,label text) returns void language plpgsql as $$begin if v is distinct from true then raise exception 'FAIL: %',label;end if;end;$$;
+create function pg_temp.expect_error(q text,code text) returns void language plpgsql as $$declare actual text;begin begin execute q;exception when others then get stacked diagnostics actual=returned_sqlstate;if actual<>code then raise exception 'FAIL expected %, got %: %',code,actual,q;end if;return;end;raise exception 'FAIL expected rejection: %',q;end;$$;
+insert into auth.users(id) values('b7000000-0000-4000-8000-000000000001'),('b7000000-0000-4000-8000-000000000002');
+create function pg_temp.avatar(n integer) returns text language sql as $$select 'b7000000-0000-4000-8000-000000000001/avatar/b7000000-0000-4000-8000-'||lpad(n::text,12,'0')||'.jpg'$$;
+-- These broad legacy policies must NOT open the new private bucket.
+create policy avatar_test_legacy_read on storage.objects for select to anon,authenticated using(true);
+create policy avatar_test_legacy_insert on storage.objects for insert to anon,authenticated with check(true);
+create policy avatar_test_legacy_delete on storage.objects for delete to anon,authenticated using(true);
+create policy avatar_test_legacy_update on storage.objects for update to anon,authenticated using(true) with check(true);
+select pg_temp.assert_true((select not public and file_size_limit=5242880 from storage.buckets where id='profile-avatars'),'private bucket and limit');
+set local role authenticated;
+select set_config('request.jwt.claim.sub','b7000000-0000-4000-8000-000000000001',true);
+savepoint probe;
+insert into storage.objects(bucket_id,name,metadata) values('profile-avatars',pg_temp.avatar(3),'{"mimetype":"image/jpeg","contentLength":100}');
+select pg_temp.expect_error($q$select public.set_profile_avatar(pg_temp.avatar(3),null)$q$,'22023');
+rollback to savepoint probe;release savepoint probe;
+select pg_temp.expect_error($q$insert into storage.objects(bucket_id,name,metadata) values('profile-avatars',pg_temp.avatar(3),'{"mimetype":"image/jpeg","size":5242881}')$q$,'42501');
+select pg_temp.expect_error($q$insert into storage.objects(bucket_id,name,metadata) values('profile-avatars',pg_temp.avatar(3),'{"mimetype":"image/png","size":100}')$q$,'42501');
+select pg_temp.expect_error($q$insert into storage.objects(bucket_id,name,metadata) values('profile-avatars',pg_temp.avatar(3),'{"mimetype":"image/jpeg","size":0}')$q$,'42501');
+select pg_temp.expect_error($q$insert into storage.objects(bucket_id,name,metadata) values('profile-avatars',pg_temp.avatar(3),'{"mimetype":"image/jpeg","size":1.5}')$q$,'42501');
+insert into storage.objects(bucket_id,name,metadata) values('profile-avatars',pg_temp.avatar(3),'{"mimetype":"image/jpeg","size":100}');
+select public.set_profile_avatar(pg_temp.avatar(3),null);
+select pg_temp.assert_true((select avatar_path=pg_temp.avatar(3) from public.profiles where id=auth.uid()),'owner path persisted');
+select pg_temp.expect_error($q$update public.profiles set avatar_path=null where id=auth.uid()$q$,'42501');
+select pg_temp.expect_error($q$update public.profiles set id='b7000000-0000-4000-8000-000000000002' where id=auth.uid()$q$,'42501');
+select pg_temp.expect_error($q$update public.user_roles set role='admin' where user_id=auth.uid()$q$,'42501');
+delete from storage.objects where bucket_id='profile-avatars';
+update storage.objects set metadata='{"mimetype":"image/jpeg","size":1}' where bucket_id='profile-avatars';
+select pg_temp.assert_true((select count(*)=1 and bool_and(metadata->>'size'='100') from storage.objects where bucket_id='profile-avatars'),'attached file immutable and protected from cleanup');
+reset role;
+set local role anon;
+select set_config('request.jwt.claim.sub','',true);
+-- Older restrictive policies use authenticated-only helper functions, so this
+-- legacy-policy fixture may deny anon SELECT outright rather than returning 0.
+-- Either result must deny access; no old policy/function is relaxed for avatars.
+do $$declare visible integer;begin
+ begin select count(*) into visible from storage.objects where bucket_id='profile-avatars';
+ exception when insufficient_privilege then visible:=0;end;
+ if visible<>0 then raise exception 'FAIL anonymous avatar read';end if;
+end;$$;
+reset role;
+set local role authenticated;
+select set_config('request.jwt.claim.sub','b7000000-0000-4000-8000-000000000002',true);
+select pg_temp.assert_true((select count(*)=0 from storage.objects where bucket_id='profile-avatars'),'cross-user reads denied even with legacy policy');
+select pg_temp.assert_true((select count(*)=0 from public.profiles where id='b7000000-0000-4000-8000-000000000001'),'cross-user profile path hidden');
+select pg_temp.expect_error($q$insert into storage.objects(bucket_id,name,metadata) values('profile-avatars',pg_temp.avatar(4),'{"mimetype":"image/jpeg","size":100}')$q$,'42501');
+select pg_temp.expect_error($q$select public.set_profile_avatar(pg_temp.avatar(3),null)$q$,'42501');
+delete from storage.objects where bucket_id='profile-avatars';
+select pg_temp.assert_true((select count(*)=0 from public.unused_avatar_uploads()),'cross-user cleanup lists no files');
+select set_config('request.jwt.claim.sub','b7000000-0000-4000-8000-000000000001',true);
+select pg_temp.assert_true((select count(*)=1 from storage.objects where bucket_id='profile-avatars'),'stranger did not delete owner file');
+insert into storage.objects(bucket_id,name,metadata) values('profile-avatars',pg_temp.avatar(4),'{"mimetype":"image/jpeg","size":5242880}');
+select pg_temp.expect_error($q$select public.set_profile_avatar(pg_temp.avatar(4),null)$q$,'40001');
+select public.set_profile_avatar(pg_temp.avatar(4),pg_temp.avatar(3));
+delete from storage.objects where bucket_id='profile-avatars' and name=pg_temp.avatar(3);
+select pg_temp.assert_true((select count(*)=1 from storage.objects where bucket_id='profile-avatars'),'replacement leaves new attached image');
+select public.set_profile_avatar(null,pg_temp.avatar(4));
+delete from storage.objects where bucket_id='profile-avatars';
+select pg_temp.assert_true((select count(*)=0 from storage.objects where bucket_id='profile-avatars'),'removal releases only own unreferenced image');
+reset role;
+set local role anon;
+select pg_temp.expect_error($q$select public.set_profile_avatar(null,null)$q$,'42501');
+select pg_temp.expect_error($q$insert into storage.objects(bucket_id,name,metadata) values('profile-avatars',pg_temp.avatar(5),'{"mimetype":"image/jpeg","size":100}')$q$,'42501');
+reset role;rollback;
+select 'PASS: private avatar ownership, restrictive Storage guards, upload metadata, CAS replacement, removal and protected fields' as result;
