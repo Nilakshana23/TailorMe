@@ -101,7 +101,7 @@ export default function RequestMessages({request}:{request:TailoringRequest}){
   finally{sending.current=false}
  }
  if(!authorized)return null
- return <section id="messages" className="request-messages" aria-labelledby="request-messages-title">
+ return <section id="messages" data-request-section aria-busy={!loaded&&!refreshError} className="request-messages" aria-labelledby="request-messages-title">
   <div className="request-chat-heading"><h3 id="request-messages-title" className="font-display-lg text-headline-sm">Messages</h3><span>{summary?`${summary.unread} unread`:'Loading unread count...'}</span></div>
   <p className="request-chat-note">Private conversation between you and this request’s {userId===request.customer_id?'tailor':'customer'}. Messages do not change quotes, measurements, dates or work progress.</p>
   <div className="request-chat-actions"><FormButton variant="secondary" onClick={()=>{setError('');setReadRetry(n=>n+1);void refresh.current()}}>Refresh messages</FormButton><FormButton variant="secondary" onClick={()=>{if(history.current)history.current.scrollTop=history.current.scrollHeight}}>Jump to latest</FormButton></div>

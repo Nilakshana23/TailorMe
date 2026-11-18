@@ -69,9 +69,6 @@
   .portal-empty { padding-block: 24px; }
 }
 
-.request-notifications { position: relative; }
-.request-notification-panel { position: absolute; right: 0; top: 100%; z-index: 50; width: min(380px, calc(100vw - 32px)); max-height: 75vh; overflow-y: auto; box-shadow: 0 8px 30px #0002; }
-@media (max-width: 640px) { .request-notification-panel { position: fixed; left: 16px; right: 16px; top: 80px; width: auto; } }
 
 /* Customer/tailor app shell only. Admin and public page layouts stay in flow. */
 .portal-fixed { --portal-sidebar-width:250px; --portal-topbar-height:72px; position:fixed; inset:0; height:100dvh; min-height:0; overflow:hidden; }
@@ -93,7 +90,6 @@
 .portal-fixed .portal-main { width:100%; min-width:0; }
 .portal-fixed .portal-main:focus-visible { outline:2px solid #735c00; outline-offset:-2px; }
 .portal-fixed .portal-nav a:focus-visible,.portal-fixed .portal-drawer-close:focus-visible { outline:2px solid #735c00; outline-offset:-2px; }
-.portal-fixed .request-notification-panel { top:calc(100% + 14px); max-height:min(560px,calc(100dvh - 88px)); overscroll-behavior:contain; }
 .portal-drawer { position:fixed; inset:0; width:100%; max-width:none; height:100dvh; max-height:none; padding:0; margin:0; border:0; background:transparent; overflow:hidden; }
 .portal-drawer:not([open]) { display:none; }
 .portal-drawer::backdrop { background:rgb(0 0 0 / .5); }
@@ -113,13 +109,9 @@
  .portal-fixed .portal-header { gap:10px; }
  .portal-fixed .portal-header-role { display:none; }
  .portal-fixed .portal-header-actions { gap:8px; }
- .portal-fixed .request-notification-panel { position:fixed; left:16px; right:16px; top:80px; width:auto; }
 }
 
 /* Compact customer and tailor portal surfaces. */
-.notification-trigger { position:relative; display:grid; place-items:center; width:44px; height:44px; border-radius:50%; }
-.notification-count { position:absolute; top:0; right:-2px; min-width:19px; padding:1px 5px; border-radius:20px; background:#fed65b; color:#241a00; font-size:11px; font-weight:700; }
-.notification-count[hidden] { display:none; }
 .portal-fixed :is(a,button,select):focus-visible { outline:3px solid #735c00; outline-offset:3px; }
 .tailor-dashboard-page .portal-main { padding:28px 24px 40px; max-width:1150px; }
 .tailor-dashboard-page .portal-heading { margin-bottom:24px; }
@@ -134,7 +126,4 @@
 @media(max-width:760px) { .request-summary-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media(max-width:480px) { .tailor-dashboard-page .portal-main { padding:24px 16px; } }
 
-/* Keep badge positioning independent of generic button/span layout rules. */
-.portal-header .request-notifications > button.notification-trigger { position:relative; display:inline-flex; align-items:center; justify-content:center; flex:0 0 44px; width:44px; height:44px; min-width:44px; padding:0; overflow:visible; white-space:nowrap; }
-.portal-header .request-notifications > button.notification-trigger > .notification-count { position:absolute; display:inline-flex; align-items:center; justify-content:center; top:0; right:-3px; width:auto; min-width:20px; height:20px; margin:0; padding:0 4px; line-height:1; white-space:nowrap; font-size:10px; border:2px solid #fbf9f9; border-radius:99px; background:#fed65b; color:#241a00; pointer-events:none; }
 #shop-photos { scroll-margin-top:24px; }

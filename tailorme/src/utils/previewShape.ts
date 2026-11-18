@@ -32,7 +32,7 @@ export function shapeControls(shape:PreviewShape,design:DesignFields):ShapeContr
  controls.push({key:'hemY',label:'Garment length to hem',min:Math.max(skirt?230:design.garment_type==='blouse'?195:design.garment_type==='shirt'?230:260,shape.waistY+30),max:455,value:shape.hemY})
  return controls
 }
-export function shapedGarmentPaths(design:DesignFields,shape:PreviewShape){
+export function shapedGarmentPaths(design:DesignFields,shape:PreviewShape,necklineOverride?:string){
  if(design.garment_type==='trousers'){
   const h=design.refinement_geometry?shape.hemY:garmentHem(design),base=trouserLegDimensions(design),outer=design.refinement_geometry?shape.left.hem:base.outer,inner=design.refinement_geometry?Math.max(8,outer*base.inner/base.outer):base.inner,waist=design.refinement_geometry?shape.left.waist:40
   const body=`M${160-waist} 140 H${160+waist} L${170+waist} 220 L${160+outer} ${h} L${160+inner} ${h} L160 260 L${160-inner} ${h} L${160-outer} ${h} L${150-waist} 220Z`
@@ -40,9 +40,9 @@ export function shapedGarmentPaths(design:DesignFields,shape:PreviewShape){
  }
  const {left:l,right:r,underarmY:u,waistY:w,hemY:h}=shape
  const skirt=design.garment_type==='skirt'
- const neck=validNeckline(design.custom_neckline)&&(design.format_version===2||design.format_version===3)?customNecklinePath(design.custom_neckline):presetNecklinePath(design.neckline)
+ const neck=necklineOverride??(validNeckline(design.custom_neckline)&&(design.format_version===2||design.format_version===3)?customNecklinePath(design.custom_neckline):presetNecklinePath(design.neckline))
  let body=skirt?`M${160-l.waist} ${w} L${160+r.waist} ${w} L${160+r.hem} ${h} L${160-l.hem} ${h} L${160-l.waist} ${w}Z`:
-  `M${160-l.shoulder} 65 L143 65 ${neck} L${160+r.shoulder} 65 Q${162+r.shoulder} 100 ${160+r.underarm} ${u} L${160+r.waist} ${w} L${160+r.hem} ${h} L${160-l.hem} ${h} L${160-l.waist} ${w} L${160-l.underarm} ${u} Q${158-l.shoulder} 100 ${160-l.shoulder} 65Z`
+  `M${160-l.shoulder} 65 ${necklineOverride?'':'L143 65'} ${neck} L${160+r.shoulder} 65 Q${162+r.shoulder} 100 ${160+r.underarm} ${u} L${160+r.waist} ${w} L${160+r.hem} ${h} L${160-l.hem} ${h} L${160-l.waist} ${w} L${160-l.underarm} ${u} Q${158-l.shoulder} 100 ${160-l.shoulder} 65Z`
  const sleeves:string[]=[]
  if(!skirt&&['short','long'].includes(design.sleeve))for(const side of ['left','right'] as const){
   const value=shape[side],sign=side==='left'?-1:1,shoulder=160+sign*value.shoulder

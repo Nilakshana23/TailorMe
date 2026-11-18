@@ -142,10 +142,11 @@ test('avatar validation enforces file type, size, signature and successful decod
 async function hookComponent(file,dependencies,seed={}){
  const slots=[],effects=[],cleanups=[];let cursor=0
  const hooks={useState(initial){const i=cursor++;if(!(i in slots))slots[i]=i in seed?seed[i]:typeof initial==='function'?initial():initial;return[slots[i],v=>{slots[i]=typeof v==='function'?v(slots[i]):v}]},useRef(initial){const i=cursor++;if(!(i in slots))slots[i]={current:initial};return slots[i]},useEffect(fn){effects.push(fn)}}
- globalThis.__profileMedia={...dependencies,hooks}
+ globalThis.__profileMedia={useNavigate:()=>()=>{},...dependencies,hooks}
  let code=ts.transpileModule(readFileSync(new URL(file,import.meta.url),'utf8'),{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText
  code=code.replace(/import (.*?) from ['"](.*?)['"];?/g,(_all,clause,spec)=>{
   if(spec==='react/jsx-runtime')return `import ${clause} from '${import.meta.resolve(spec)}';`
+  if(spec.endsWith('/notificationPresentation'))return `import ${clause} from '${moduleUrl(new URL('../src/utils/notificationPresentation.ts',import.meta.url))}';`
   if(spec==='react')return `const ${clause}=globalThis.__profileMedia.hooks;`
   if(clause.startsWith('{'))return `const ${clause}=globalThis.__profileMedia;`
   return `const ${clause}=(props)=>props.children??null;`
@@ -167,8 +168,8 @@ test('notification badge is absent at zero, capped visually and exposes the actu
   const read=nodes(tree).find(n=>n.props?.children==='Mark as read');read.props.onClick();await new Promise(setImmediate)
   assert.equal(reads,1)
  }
- const css=readFileSync(new URL('../src/pages/Dashboards.css',import.meta.url),'utf8')
- assert.match(css,/button.notification-trigger \{ position:relative/)
+ const css=readFileSync(new URL('../src/components/portal/NotificationBell.css',import.meta.url),'utf8')
+ assert.match(css,/notification-trigger \{ position:relative/)
  assert.match(css,/notification-count \{ position:absolute/)
  delete globalThis.__profileMedia
 })
