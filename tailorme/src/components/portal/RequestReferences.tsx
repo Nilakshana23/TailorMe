@@ -63,7 +63,7 @@ export default function RequestReferences({requestId}:{requestId:string}){
  const {session}=useAuth(),key=`${session?.user.id}:${requestId}:${attempt}`
  useEffect(()=>{let active=true;requestReferenceService.list(requestId).then(rows=>{if(active)setResult({key,rows,error:false})}).catch(()=>{if(active)setResult({key,rows:[],error:true})});return()=>{active=false}},[key,requestId])
  const current=result?.key===key?result:null
- return <section className="request-references" aria-label="Submitted private reference images"><h3 className="font-display-lg text-headline-sm">Reference images shared with this request</h3><p>Inspiration references; your tailor confirms feasibility. These images and notes are fixed for this request.</p>
+ return <section data-request-section aria-busy={!current} className="request-references" aria-label="Submitted private reference images"><h3 className="font-display-lg text-headline-sm">Reference images shared with this request</h3><p>Inspiration references; your tailor confirms feasibility. These images and notes are fixed for this request.</p>
  {!current?<p role="status">Loading reference images...</p>:current.error?<><p role="alert">Unable to load private references.</p><FormButton variant="secondary" onClick={()=>setAttempt(n=>n+1)}>Retry reference images</FormButton></>:current.rows.length?<div className="request-reference-grid">{current.rows.map(row=><article key={row.upload_id}><ReferenceImage path={row.image_path} number={row.ordinal}/><p className="request-reference-note">{row.note||'No note supplied.'}</p></article>)}</div>:<p>No reference images were shared with this request.</p>}
  </section>
 }

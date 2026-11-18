@@ -101,10 +101,12 @@ test('tailor ordering form/nav/card reuse role without customer tools; own shop 
 async function interactive(file,dependencies,seed={}){
  const slots=[],deps=[],cleanups=[];let cursor=0,effects=[]
  const hooks={useState(initial){const i=cursor++;if(!(i in slots))slots[i]=i in seed?seed[i]:typeof initial==='function'?initial():initial;return[slots[i],v=>{slots[i]=typeof v==='function'?v(slots[i]):v}]},useRef(initial){const i=cursor++;if(!(i in slots))slots[i]={current:initial};return slots[i]},useEffect(fn,next){const i=cursor++;if(!deps[i]||next.some((v,j)=>v!==deps[i][j])){deps[i]=next;effects.push(()=>{cleanups[i]?.();cleanups[i]=fn()})}}}
- globalThis.__ordering={...dependencies,hooks}
+ globalThis.__ordering={useNavigate:()=>()=>{},...dependencies,hooks}
  let code=ts.transpileModule(readFileSync(new URL(file,import.meta.url),'utf8'),{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText
  code=code.replace(/import (.*?) from ['"](.*?)['"];?/g,(_all,clause,spec)=>{
   if(spec==='react/jsx-runtime')return `import ${clause} from '${import.meta.resolve(spec)}';`
+  if(spec.endsWith('/requestSectionNavigation'))return `import ${clause} from '${moduleUrl(new URL('../src/utils/requestSectionNavigation.ts',import.meta.url))}';`
+  if(spec.endsWith('/notificationPresentation'))return `import ${clause} from '${moduleUrl(new URL('../src/utils/notificationPresentation.ts',import.meta.url))}';`
   if(spec==='react')return `const ${clause}=globalThis.__ordering.hooks;`
   if(clause.startsWith('{'))return `const ${clause}=globalThis.__ordering;`
   return `const ${clause}=(props)=>props.children??null;`

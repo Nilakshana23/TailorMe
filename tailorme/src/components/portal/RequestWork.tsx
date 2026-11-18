@@ -19,7 +19,7 @@ export default function RequestWork({ request,canManage,onUpdated }: { request: 
   try { const updated=await workService.confirm(request,date); onUpdated(updated);setMessage('Confirmed completion date saved.') }
   catch(cause){setError(`${authError(cause)} Retry the same action or refresh the request.`)}finally{busy.current=false;setPending(false)}
  }
- return <section className="mt-8 border-t border-outline-variant pt-6"><h3 className="font-display-lg text-headline-sm">Completion and confirmed date</h3>
+ return <section id="work" data-request-section className="mt-8 border-t border-outline-variant pt-6"><h3 className="font-display-lg text-headline-sm">Completion and confirmed date</h3>
  <p className="mt-4">Customer preferred date: {request.preferred_date}. This is a preference, not an agreed deadline.</p>
  <p className="mt-3 font-semibold">Tailor-confirmed completion date: {request.confirmed_date ?? 'Not confirmed'}</p>
  <p className="mt-3">Work status: {request.completed_at ? 'Completed' : request.status==='accepted' ? 'Accepted — incomplete' : 'Not started'}</p>

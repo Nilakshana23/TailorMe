@@ -1,0 +1,22 @@
+.design-preview-tabs [role=tablist] { display:flex; gap:8px; margin-bottom:16px; }
+.design-preview-tabs [role=tab] { min-height:44px; padding:10px 16px; border:1px solid #bcb4a7; border-radius:8px; background:white; color:#1b1c1c; }
+.design-preview-tabs [role=tab][aria-selected=true] { background:#000; color:#fff; }
+.design-preview-tabs [hidden] { display:none; }
+.design-preview-tabs :is(button,select):focus-visible { outline:3px solid #735c00; outline-offset:3px; }
+.preview3d-disclaimer { font-weight:600; margin-bottom:12px; }
+.preview3d-limitations { border-left:3px solid #b58d18; padding-left:12px; margin:12px 0; font-size:14px; }
+.preview3d-view canvas { display:block; width:100%; height:clamp(280px,50vh,480px); touch-action:pan-y; border:1px solid #ded8ce; border-radius:12px; margin:12px 0; }
+.preview3d-view > p { font-size:13px; line-height:1.5; }
+.preview3d-silhouette { display:flex; flex-wrap:wrap; gap:8px; align-items:center; font-size:14px; }
+.preview3d-silhouette select { background:white; border:1px solid #bcb4a7; padding:10px; border-radius:8px; min-height:44px; max-width:100%; }
+.preview3d-controls { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+.preview3d-controls button { min-height:44px; border:1px solid #bcb4a7; border-radius:8px; padding:8px 12px; background:white; color:#1b1c1c; font-size:14px; }
+
+.preview3d-support { margin:0 0 4px; font-size:13px; line-height:1.4; }
+.preview3d-omissions { margin:0 0 8px; font-size:12px; color:#655d50; line-height:1.4; }
+.preview3d-support-details { margin-top:12px; font-size:13px; line-height:1.5; }
+.preview3d-support-details summary { min-height:44px; display:list-item; padding:10px 0; cursor:pointer; }
+.preview3d-support-details summary:focus-visible { outline:3px solid #735c00; outline-offset:3px; }
+.preview3d-views { margin-top:4px; }
+
+.design-preview-tabs .preview3d-disclaimer { font-size:12px; font-weight:400; line-height:1.4; margin:12px 0 4px; }

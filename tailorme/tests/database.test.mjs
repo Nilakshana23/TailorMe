@@ -55,6 +55,7 @@ test('PostgreSQL migrations and authorization/workflow suites (local Auth/Storag
       '20261030002600': 'reference_upload_metadata.sql',
       '20261031002700': 'profile_avatars.sql',
       '20261031002800': 'tailors_as_requesters.sql',
+      '20261113002900': 'dress_back_neckline.sql',
     }
     for (const file of readdirSync(migrations).filter((name) => name.endsWith('.sql')).sort()) {
       if (file.startsWith('20261026000400')) {
@@ -110,6 +111,11 @@ test('PostgreSQL migrations and authorization/workflow suites (local Auth/Storag
       assert.ok(suite,`Migration has a workflow suite: ${file}`)
       const results = await db.exec(readFileSync(new URL(`../../supabase/tests/${suite}`, import.meta.url), 'utf8'))
       assert.match(results.at(-1).rows[0].result, /^PASS:/)
+    }
+    // Re-run design regressions against the final schema, including migration 029.
+    for(const suite of ['collar_styles.sql','template_refinement.sql']){
+      const results=await db.exec(readFileSync(new URL('../../supabase/tests/'+suite,import.meta.url),'utf8'))
+      assert.match(results.at(-1).rows[0].result,/^PASS:/)
     }
     const sharing = await db.exec(readFileSync(new URL('../../supabase/tests/sketch_sharing.sql',import.meta.url),'utf8'))
     assert.match(sharing.at(-1).rows[0].result,/^PASS:/)

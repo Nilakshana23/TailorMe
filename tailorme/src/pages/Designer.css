@@ -134,3 +134,5 @@
 
 .designer-editor-heading { margin:20px 0; scroll-margin-top:24px; overflow-wrap:anywhere; }
 .designer-editor-heading:focus-visible { outline:3px solid #735c00; outline-offset:5px; border-radius:4px; }
+
+.back-neckline-controls{min-width:0;display:grid;gap:.65rem}.back-neckline-controls input[type="range"]{display:block;width:100%;min-height:44px;accent-color:#987828}.back-neckline-controls :is(select,input):focus-visible{outline:3px solid #987828;outline-offset:3px}

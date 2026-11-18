@@ -57,7 +57,7 @@ export default function RequestDesignProposals({request,onPendingChange}:{reques
   void action(async()=>{try{await designProposalService.decide(chosen.id,chosen.status,chosen.version,chosen.status==='accepted')}catch(cause){if(mounted.current&&rolledBack(cause)){setDecision(null);setConfirmId(null);setAttempt(n=>n+1)}throw cause}if(mounted.current){setDecision(null);setConfirmId(null)}},`Proposal ${chosen.status}. Price and confirmed deadline have not changed.`)
  }
  if(!participant)return null
- return <section id="design-proposals" className="request-design-proposals" aria-labelledby="design-proposals-title"><h3 id="design-proposals-title" className="font-display-lg text-headline-sm">Agreed design and change proposals</h3>
+ return <section id="design-proposals" data-request-section aria-busy={!current&&!loadError} className="request-design-proposals" aria-labelledby="design-proposals-title"><h3 id="design-proposals-title" className="font-display-lg text-headline-sm">Agreed design and change proposals</h3>
  <p>Only accepting a design-change proposal changes the agreed design. Ordinary chat images do not. Acceptance does not change the price or confirmed completion date; quotations and dates are handled separately.</p>
  <FormButton variant="secondary" disabled={pending} onClick={()=>{setError('');setAttempt(n=>n+1)}}>Refresh design history</FormButton>
  {!current?<p role="status">{loadError?'Design history unavailable. Use Refresh design history to retry.':'Loading agreed design and proposals...'}</p>:<>

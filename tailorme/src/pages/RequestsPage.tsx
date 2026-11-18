@@ -1,3 +1,4 @@
+import {revealRequestSection,requestSectionHashes} from '../utils/requestSectionNavigation'
 import RequestPayments from '../components/portal/RequestPayments'
 import RequestReferences from '../components/portal/RequestReferences'
 import RequestMessages from '../components/portal/RequestMessages'
@@ -63,11 +64,12 @@ export default function RequestsPage({orders=false}:{orders?:boolean}) {
   const current = result?.key.startsWith(scope) ? result : null
   const refreshing=!!current&&current.key!==key
   const request = current?.rows[0]
+  const [sectionNotice,setSectionNotice]=useState<{key:string;message:string}|null>(null)
+  const sectionKey=`${id}:${location.key}:${location.hash}`
   useEffect(()=>{
-    // Honor explicit conversation navigation once the async details exist.
-    // Message arrivals and older-page loads do not retrigger this effect.
-    if(id&&request?.id&&['#messages','#design-proposals','#payments'].includes(location.hash))document.getElementById(location.hash.slice(1))?.scrollIntoView({block:'start'})
-  },[id,request?.id,location.hash,location.key])
+    if(!id||!request?.id||!requestSectionHashes.includes(location.hash))return
+    return revealRequestSection(request.id,location.hash,()=>setSectionNotice({key:sectionKey,message:'This section could not finish loading. Use the section refresh control, or refresh this request and try again.'}))
+  },[id,request?.id,location.hash,location.key,sectionKey])
   useEffect(()=>{
     if(id||!current||current.error)return
     let active=true
@@ -98,7 +100,7 @@ export default function RequestsPage({orders=false}:{orders?:boolean}) {
       </div>
       {customerList&&unread?.key===key&&unread.error&&<p role="status" className="mb-4">Unread counts are unavailable. You can still open any conversation.</p>}
       {refreshing&&<p role="status">Refreshing requests?</p>}{current?.error&&current.rows.length>0&&<p role="alert">Refresh failed. Showing previously loaded requests. {current.error}</p>}
-      {!current ? <p role="status" className={customerList?"customer-requests-state":undefined}>Loading requests...</p> : current.error && !current.rows.length ? <p role="alert" className={customerList?"customer-requests-state":undefined}>Unable to load requests. {current.error} Use Refresh requests to retry.</p> : !current.rows.length ? <p className={customerList?"customer-requests-state":undefined}>{id ? 'Request not found or unavailable to your account.' : customerList ? page>0?'No more requests on this page. Use Previous page to go back.':filter==='all'?providerView?'No received requests yet.':'No orders yet. Find a tailor to send your first request.':`No ${filter} requests. Choose All to see your other requests.` : filter==='all'?'No tailoring requests yet.':`No ${filter} requests.`}</p> : id && request ? <>
+      {!current ? <p role="status" className={customerList?"customer-requests-state":undefined}>Loading requests...</p> : current.error && !current.rows.length ? <p role="alert" className={customerList?"customer-requests-state":undefined}>Unable to load requests. {current.error} Use Refresh requests to retry.</p> : !current.rows.length ? <p role={id?'alert':undefined} className={customerList?"customer-requests-state":undefined}>{id ? 'Request not found or unavailable to your account.' : customerList ? page>0?'No more requests on this page. Use Previous page to go back.':filter==='all'?providerView?'No received requests yet.':'No orders yet. Find a tailor to send your first request.':`No ${filter} requests. Choose All to see your other requests.` : filter==='all'?'No tailoring requests yet.':`No ${filter} requests.`}</p> : id && request ? <div data-request-detail={request.id}>
         {location.state?.sent && <p role="status" className="mb-6">Your tailoring request was sent.</p>}
         <p className="text-sm mb-4">{request.customer_id===session?.user.id?'You are the requester. Your service provider manages this work.':'You are the service provider for this request.'}</p><div className="request-detail-status"><RequestStatusBadge status={request.status} /></div>
         <dl className="application-details mt-6">{[['Shop',request.shop_name],['Requester',request.customer_name || 'Requester'],['Garment type',request.garment_type],['Description',request.description],['Quantity',String(request.quantity)],['Preferred completion date',request.preferred_date],['Rejection reason',request.rejection_reason ?? '']].filter(([,value]) => value).map(([label,value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}<div className="request-timestamps"><dt>Created</dt><dd><Timestamp value={request.created_at} /></dd></div><div className="request-timestamps"><dt>Last updated</dt><dd><Timestamp value={request.updated_at} /></dd></div>{request.responded_at && <div className="request-timestamps"><dt>Tailor responded</dt><dd><Timestamp value={request.responded_at} /></dd></div>}{request.cancelled_at && <div className="request-timestamps"><dt>Cancelled</dt><dd><Timestamp value={request.cancelled_at} /></dd></div>}</dl>
@@ -112,8 +114,9 @@ export default function RequestsPage({orders=false}:{orders?:boolean}) {
         <p className="mt-6 text-sm">The preferred date is subject to tailor confirmation. This request does not create an order.</p>
         {request.status === 'pending' && request.customer_id === session?.user.id && <FormButton variant="secondary" className="mt-6 w-full" disabled={pending} onClick={() => { void decide('cancelled') }}>Cancel pending request</FormButton>}
         {request.status === 'pending' && request.tailor_id === session?.user.id && role === 'tailor' && <div className="mt-6 space-y-5"><FormButton disabled={pending} onClick={() => { void decide('accepted') }}>Accept inquiry</FormButton><form onSubmit={(event) => { event.preventDefault(); void decide('rejected') }}><label htmlFor="request-rejection" className="block mb-2">Rejection reason (required to reject)</label><textarea ref={reasonInput} id="request-rejection" className="application-textarea" maxLength={2000} disabled={pending} value={reason} onChange={(event) => setReason(event.target.value)} /><FormButton type="submit" variant="secondary" className="w-full mt-3" disabled={pending}>Reject request</FormButton></form></div>}
-      </> : <><ul className="customer-requests-list">{current.rows.map(row=><li key={row.id}><CustomerRequestCard request={row} tailor={providerView} base={base} unread={unread?.key===key&&!unread.error?unread.counts[row.id]??0:0}/></li>)}</ul><div className={customerList?"customer-requests-pagination":"flex gap-4 mt-6"} aria-label="Request pagination"><FormButton variant="secondary" className="px-5" disabled={page === 0} onClick={() => setPage((value) => value-1)}>Previous</FormButton><FormButton variant="secondary" className="px-5" disabled={current.rows.length < 20} onClick={() => setPage((value) => value+1)}>Next</FormButton></div></>}
+      </div> : <><ul className="customer-requests-list">{current.rows.map(row=><li key={row.id}><CustomerRequestCard request={row} tailor={providerView} base={base} unread={unread?.key===key&&!unread.error?unread.counts[row.id]??0:0}/></li>)}</ul><div className={customerList?"customer-requests-pagination":"flex gap-4 mt-6"} aria-label="Request pagination"><FormButton variant="secondary" className="px-5" disabled={page === 0} onClick={() => setPage((value) => value-1)}>Previous</FormButton><FormButton variant="secondary" className="px-5" disabled={current.rows.length < 20} onClick={() => setPage((value) => value+1)}>Next</FormButton></div></>}
       {!id && current && !current.error && current.rows.length === 0 && page > 0 && <FormButton variant="secondary" className="mt-5 px-5" onClick={() => setPage((value) => value-1)}>Previous page</FormButton>}
+      {sectionNotice?.key===sectionKey&&<p role="status">{sectionNotice.message}</p>}
       <p role="status" aria-live="polite" className="mt-4">{pending ? 'Updating request...' : message}</p><p role="alert" className="text-error mt-4">{error}</p>
     </RequestPagePanel></PortalLayout>
 }

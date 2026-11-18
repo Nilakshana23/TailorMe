@@ -46,3 +46,11 @@ export function changeNecklineDepth(value:CustomNeckline,index:number,y:number,s
  if(!validNeckline(result))throw new Error('The neckline needs some depth inside the marked region.')
  return result
 }
+
+// The SVG cubic uses equally spaced x controls, so x is linear in t.
+// Its horizontal y tangents give this exact smoothstep interpolation.
+export function customNecklineDepthAt(value:CustomNeckline,x:number):number{
+ if(!validNeckline(value)||!Number.isFinite(x)||x<necklineX[0]||x>necklineX[4])throw new Error('Invalid custom neckline coordinates. Reapply a valid curve or reset to a preset.')
+ const segment=Math.min(3,Math.floor((x-necklineX[0])/8.5)),t=(x-necklineX[segment])/8.5
+ return value.depths[segment]+(value.depths[segment+1]-value.depths[segment])*t*t*(3-2*t)
+}
